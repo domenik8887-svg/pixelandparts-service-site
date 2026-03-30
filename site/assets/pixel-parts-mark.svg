@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="title desc">
+  <title id="title">Pixel und Parts Markenzeichen</title>
+  <desc id="desc">Ein Schildsymbol mit Pixel- und Hardware-Elementen.</desc>
+  <defs>
+    <linearGradient id="shieldFill" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#122645"/>
+      <stop offset="100%" stop-color="#0a1424"/>
+    </linearGradient>
+  </defs>
+  <rect width="96" height="96" rx="26" fill="#07101d"/>
+  <path d="M48 10l29 10v26c0 20.4-12.6 35.1-29 40-16.4-4.9-29-19.6-29-40V20l29-10z" fill="url(#shieldFill)" stroke="#34d2d1" stroke-width="3"/>
+  <path d="M48 24l13 5v12c0 8.9-5.3 16.4-13 19.6-7.7-3.2-13-10.7-13-19.6V29l13-5z" fill="#34d2d1"/>
+  <rect x="22" y="57" width="13" height="13" rx="3" fill="#ffbc49"/>
+  <rect x="61" y="57" width="13" height="13" rx="3" fill="#ffbc49"/>
+  <path d="M27 49h42" stroke="#ff8f3c" stroke-width="5" stroke-linecap="round"/>
+</svg>

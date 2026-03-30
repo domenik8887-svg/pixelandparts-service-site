@@ -1,0 +1,4 @@
+Contact: mailto:security@pixelandparts.de
+Contact: mailto:kontakt@pixelandparts.de
+Preferred-Languages: de, en
+Expires: 2027-03-30T23:59:59Z

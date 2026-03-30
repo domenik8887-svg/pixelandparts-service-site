@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pixel&amp;Parts Dashboard</title>
+  <link rel="stylesheet" href="/local-ui/dashboard.css">
+  <script src="/local-ui/dashboard.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">Anfragenverwaltung</p>
+      <h1>Pixel&amp;Parts Dashboard</h1>
+    </div>
+    <div class="topbar-actions">
+      <a class="ghost-button" href="/" target="_blank" rel="noreferrer">Website</a>
+      <a class="ghost-button" href="/dashboard/api/export.csv">CSV Export</a>
+      <button class="ghost-button" id="logout-button" type="button">Logout</button>
+    </div>
+  </header>
+
+  <main class="dashboard-shell">
+    <section class="stats-grid" id="stats-grid">
+      <article class="stat-card">
+        <span>Gesamt</span>
+        <strong id="stat-total">0</strong>
+      </article>
+      <article class="stat-card">
+        <span>Neu</span>
+        <strong id="stat-open">0</strong>
+      </article>
+      <article class="stat-card">
+        <span>In Bearbeitung</span>
+        <strong id="stat-progress">0</strong>
+      </article>
+      <article class="stat-card">
+        <span>Erledigt</span>
+        <strong id="stat-done">0</strong>
+      </article>
+    </section>
+
+    <section class="toolbar">
+      <label class="search-box">
+        <span>Suchen</span>
+        <input id="search-input" type="search" placeholder="Name, Leistung, Geraet, Nachricht">
+      </label>
+
+      <label class="filter-box">
+        <span>Status</span>
+        <select id="status-filter">
+          <option value="Alle">Alle</option>
+          <option value="Neu">Neu</option>
+          <option value="In Bearbeitung">In Bearbeitung</option>
+          <option value="Erledigt">Erledigt</option>
+        </select>
+      </label>
+    </section>
+
+    <p class="feedback" id="dashboard-feedback" aria-live="polite"></p>
+    <section class="inquiry-list" id="inquiry-list"></section>
+  </main>
+</body>
+</html>

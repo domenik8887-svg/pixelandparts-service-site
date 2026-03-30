@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pixel&amp;Parts Login</title>
+  <link rel="stylesheet" href="/local-ui/login.css">
+  <script src="/local-ui/login.js" defer></script>
+</head>
+<body>
+  <main class="login-shell">
+    <section class="login-card">
+      <p class="eyebrow">Anfragezentrale</p>
+      <h1>Pixel&amp;Parts Dashboard</h1>
+      <p class="intro">
+        Melde dich an, um neue Reparatur-, Upgrade- und Datenrettungsanfragen auf PC oder Handy zu bearbeiten.
+      </p>
+
+      <form id="login-form" class="login-form">
+        <label>
+          <span>Benutzername</span>
+          <input type="text" name="username" value="admin" autocomplete="username" required>
+        </label>
+
+        <label>
+          <span>Passwort</span>
+          <input type="password" name="password" autocomplete="current-password" required>
+        </label>
+
+        <button type="submit">Einloggen</button>
+        <p id="login-feedback" class="feedback" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+</body>
+</html>
