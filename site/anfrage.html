@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'self' https: http://localhost:8080 http://127.0.0.1:8080; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests">
+  <meta name="description" content="Anfrageformular für Reparaturen, Upgrades, Datenrettung und Beratung bei Pixel & Parts.">
+  <meta name="theme-color" content="#f5f1ea">
+  <title>Pixel &amp; Parts | Anfrage</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="modern.css">
+  <script src="public.js" defer></script>
+</head>
+<body data-site-root="." data-success-url="./anfrage-erfolgreich.html">
+  <a class="skip-link" href="#hauptinhalt">Zum Inhalt springen</a>
+  <header class="site-header"><div class="shell nav-shell"><a class="brand" href="index.html"><img src="assets/pixel-parts-mark.svg" width="52" height="52" alt=""><span><strong>Pixel &amp; Parts</strong><small>PC-Service, Reparatur und Datenrettung</small></span></a><div class="header-tools"><nav class="main-nav" aria-label="Hauptnavigation"><a href="index.html">Start</a><a href="leistungen.html">Leistungen</a><a href="arbeitsweise.html">Arbeitsweise</a><a href="faq.html">FAQ</a><a class="is-active" href="anfrage.html">Anfrage</a><a href="kontakt.html">Kontakt</a></nav><div class="language-switch" aria-label="Sprache"><a class="is-active" href="anfrage.html">DE</a><a href="en/request.html">EN</a></div></div></div></header>
+  <main id="hauptinhalt" class="page-shell">
+    <section class="shell page-hero">
+      <div><p class="eyebrow">Anfrageformular</p><h1>Reparatur-, Upgrade- oder Datenanfrage senden.</h1><p class="lead">Beschreibe kurz Gerät, Problem und gewünschten Kontaktweg. So kann Pixel &amp; Parts schneller einschätzen, ob Reparatur, Aufrüstung, Datenrettung oder Beratung der richtige nächste Schritt ist.</p></div>
+      <article class="panel request-copy"><div class="status-chip" id="backend-chip">Verbindung wird geprüft</div><h3>Was hier hilft</h3><ul><li>Gerät oder Gerätekategorie nennen</li><li>Problem oder gewünschte Änderung kurz beschreiben</li><li>Passenden Kontaktweg auswählen</li><li>Datenrisiko oder Totalausfall direkt erwähnen</li></ul><p class="queue-note" id="queue-note">Aktuell keine zwischengespeicherten Anfragen auf diesem Gerät.</p><p class="contact-note" id="backend-note">Das Formular prüft die Verbindung automatisch und übermittelt neue Anfragen direkt, sobald die Verbindung steht.</p></article>
+    </section>
+
+    <section class="shell section">
+      <form class="request-form" data-request-form method="post" action="./api/inquiries" novalidate>
+        <div class="form-grid">
+          <label class="field"><span>Name</span><input type="text" name="name" autocomplete="name" required></label>
+          <label class="field"><span>E-Mail</span><input type="email" name="email" autocomplete="email" required></label>
+          <label class="field"><span>Telefon</span><input type="tel" name="phone" autocomplete="tel"></label>
+          <label class="field"><span>Leistung</span><select name="serviceType" data-custom-select required><option value="">Bitte auswählen</option><option>PC-Reparatur</option><option>Laptop-Reparatur</option><option>Hardware-Upgrade</option><option>Software-Upgrade / Update</option><option>Datenrettung</option><option>Beratung</option></select></label>
+          <label class="field field-wide"><span>Gerät</span><input type="text" name="deviceType" placeholder="z. B. Office-PC, Gaming-PC, ThinkPad oder iMac"></label>
+          <label class="field field-wide"><span>Bevorzugter Kontaktweg</span><select name="preferredContact" data-custom-select><option>E-Mail</option><option>Telefon</option><option>WhatsApp</option></select></label>
+          <label class="field field-full"><span>Problembeschreibung</span><textarea name="message" rows="6" placeholder="Beschreibe kurz den Fehler, das gewünschte Upgrade oder welche Daten übernommen werden sollen." required></textarea></label>
+        </div>
+        <input type="hidden" name="source" value="website">
+        <label class="field" style="display:none"><span>Bitte leer lassen</span><input type="text" name="website" autocomplete="off" tabindex="-1"></label>
+        <button class="button button-primary" id="request-submit" type="submit">Anfrage senden</button>
+        <p class="field-hint" id="request-hint">Wenn die Verbindung verfügbar ist, wird die Anfrage direkt übermittelt. Bei einer kurzen Störung kann sie sicher auf diesem Gerät zwischengespeichert und später automatisch gesendet werden.</p>
+        <p class="field-feedback" id="request-feedback" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="shell footer-grid"><div><p class="footer-title">Pixel &amp; Parts</p><p>Strukturierte Anfrageannahme statt loses Hin- und Herschreiben.</p></div><div><p class="footer-title">Seiten</p><ul class="footer-list"><li><a href="leistungen.html">Leistungen</a></li><li><a href="arbeitsweise.html">Arbeitsweise</a></li><li><a href="faq.html">FAQ</a></li><li><a href="kontakt.html">Kontakt</a></li></ul></div><div><p class="footer-title">Direkter Kontakt</p><ul class="footer-list"><li><a href="mailto:koelbeldomenik@web.de">koelbeldomenik@web.de</a></li><li><a href="tel:+491771680815">0177 1680815</a></li><li><a href="https://wa.me/4915751713843" rel="noreferrer">WhatsApp</a></li></ul></div></div></footer>
+</body>
+</html>

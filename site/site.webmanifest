@@ -1,12 +1,12 @@
 {
-  "name": "Pixel&Parts",
-  "short_name": "Pixel&Parts",
-  "description": "PC- und Laptop-Reparaturen, Aufrüstung, Datenrettung und Beratung von Pixel&Parts.",
+  "name": "Pixel & Parts",
+  "short_name": "Pixel & Parts",
+  "description": "PC- und Laptop-Reparaturen, Aufrüstung, Datenrettung und Beratung von Pixel & Parts.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#08111e",
-  "theme_color": "#0a1324",
+  "background_color": "#f5f1ea",
+  "theme_color": "#f5f1ea",
   "icons": [
     {
       "src": "favicon.svg",

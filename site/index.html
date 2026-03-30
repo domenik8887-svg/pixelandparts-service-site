@@ -4,368 +4,113 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; font-src 'self'; script-src 'self'; connect-src 'self' https: http://localhost:8080 http://127.0.0.1:8080; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests">
-  <meta name="referrer" content="strict-origin-when-cross-origin">
-  <meta name="description" content="Pixel&Parts repariert PCs und Laptops, übernimmt Hardware- und Software-Upgrades, Datenrettung, Systempflege und verständliche IT-Beratung.">
-  <meta name="theme-color" content="#0a1324">
-  <meta name="color-scheme" content="dark light">
-  <title>Pixel&amp;Parts | PC- und Laptop-Reparatur, Upgrades, Datenrettung</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'self' https: http://localhost:8080 http://127.0.0.1:8080; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests">
+  <meta name="description" content="Pixel & Parts in Köln-Mülheim: PC- und Laptop-Reparaturen, Aufrüstung, Datenrettung und technische Beratung.">
+  <meta name="theme-color" content="#f5f1ea">
+  <title>Pixel &amp; Parts | Start</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="manifest" href="site.webmanifest">
-  <link rel="stylesheet" href="styles.css">
-  <script src="site.js" defer></script>
+  <link rel="stylesheet" href="modern.css">
+  <script src="public.js" defer></script>
 </head>
-<body>
+<body data-site-root=".">
   <a class="skip-link" href="#hauptinhalt">Zum Inhalt springen</a>
 
   <header class="site-header">
     <div class="shell nav-shell">
-      <a class="brand" href="index.html" aria-label="Pixel&amp;Parts Startseite">
+      <a class="brand" href="index.html" aria-label="Pixel &amp; Parts Startseite">
         <img src="assets/pixel-parts-mark.svg" width="52" height="52" alt="">
         <span>
-          <strong>Pixel&amp;Parts</strong>
-          <small>Reparatur, Aufrüstung und Datenrettung</small>
+          <strong>Pixel &amp; Parts</strong>
+          <small>PC-Service, Reparatur und Datenrettung</small>
         </span>
       </a>
 
-      <nav class="main-nav" aria-label="Hauptnavigation">
-        <a href="#leistungen">Leistungen</a>
-        <a href="#vorteile">Warum Pixel&amp;Parts</a>
-        <a href="#ablauf">Ablauf</a>
-        <a href="#faq">FAQ</a>
-        <a href="#anfrage">Anfrage</a>
-        <a href="impressum.html">Impressum</a>
-        <a href="datenschutz.html">Datenschutz</a>
-      </nav>
+      <div class="header-tools">
+        <nav class="main-nav" aria-label="Hauptnavigation">
+          <a class="is-active" href="index.html">Start</a>
+          <a href="leistungen.html">Leistungen</a>
+          <a href="arbeitsweise.html">Arbeitsweise</a>
+          <a href="faq.html">FAQ</a>
+          <a href="anfrage.html">Anfrage</a>
+          <a href="kontakt.html">Kontakt</a>
+        </nav>
+
+        <div class="language-switch" aria-label="Sprache">
+          <a class="is-active" href="index.html">DE</a>
+          <a href="en/index.html">EN</a>
+        </div>
+      </div>
     </div>
   </header>
 
-  <main id="hauptinhalt">
-    <section class="hero shell">
-      <div class="hero-copy">
-        <p class="eyebrow">PC-Service für Privatkunden, Homeoffice und kleine Teams</p>
-        <h1>Wenn Technik nervt, bringt Pixel&amp;Parts sie wieder zuverlässig ins Laufen.</h1>
-        <p class="lead">
-          Ob defekter Laptop, langsamer PC, missglücktes Update, neue SSD, mehr RAM oder wichtige
-          Daten auf einem streikenden System: Pixel&amp;Parts kombiniert saubere Fehlerdiagnose,
-          nachvollziehbare Umsetzung und klare Kommunikation ohne unnötiges Fachchinesisch.
-        </p>
-
+  <main id="hauptinhalt" class="page-shell">
+    <section class="shell page-hero">
+      <div>
+        <p class="eyebrow">PC-Service in Köln-Mülheim</p>
+        <h1>Reparatur, Aufrüstung und Datenrettung ohne unnötiges Drumherum.</h1>
+        <p class="lead">Pixel &amp; Parts unterstützt Privatkunden und kleine Unternehmen bei Reparaturen, Aufrüstung, Datenrettung und technischer Beratung. Im Mittelpunkt stehen eine saubere Diagnose, eine ehrliche Einschätzung und Lösungen, die im Alltag wirklich weiterhelfen.</p>
         <div class="cta-row">
-          <a class="button button-primary" href="#anfrage">Anfrage starten</a>
-          <a class="button button-secondary" href="#leistungen">Leistungen ansehen</a>
+          <a class="button button-primary" href="anfrage.html">Anfrage senden</a>
+          <a class="button button-secondary" href="leistungen.html">Leistungen ansehen</a>
         </div>
-
-        <ul class="trust-strip" aria-label="Schwerpunkte">
-          <li>PC- und Laptop-Reparatur</li>
-          <li>Hardware- und Software-Upgrades</li>
-          <li>Datenrettung und Systemumzug</li>
-          <li>Beratung mit ehrlicher Einschätzung</li>
-        </ul>
       </div>
 
-      <aside class="hero-panel" aria-label="Leistungsschwerpunkte">
-        <div class="status-card">
-          <p class="status-title">Typische Fälle</p>
-          <ul>
-            <li>Gerät startet nicht mehr oder wird plötzlich extrem langsam</li>
-            <li>Laptop wird heiß, laut oder schaltet sich unerwartet aus</li>
-            <li>SSD-, RAM- oder Windows-Upgrade mit sauberer Übernahme</li>
-            <li>Wichtige Daten müssen vor Schaden oder Wechsel gesichert werden</li>
+      <div class="hero-side">
+        <article class="panel">
+          <h3>Worum es hier geht</h3>
+          <ul class="detail-list">
+            <li>PC- und Laptop-Reparaturen</li>
+            <li>Hard- und Software-Upgrades</li>
+            <li>Datenrettung und Datenübernahme</li>
+            <li>Beratung mit ehrlicher Einschätzung</li>
           </ul>
-        </div>
-        <div class="status-card">
-          <p class="status-title">Organisation &amp; Schutz</p>
-          <ul>
-            <li>Erst Diagnose, dann Entscheidung über Reparatur oder Aufrüstung</li>
-            <li>Neue Fälle landen direkt in einer lokalen SQLite-Verwaltung</li>
-            <li>Die interne Fallverwaltung ist passwortgeschützt und getrennt vom öffentlichen Auftritt</li>
-            <li>Keine Tracker, keine Fremdskripte und Offline-Puffer bei Verbindungsproblemen</li>
+        </article>
+        <article class="panel">
+          <h3>Typische Fälle</h3>
+          <ul class="detail-list">
+            <li>Laptop startet nicht mehr oder wird zu heiß</li>
+            <li>PC ist plötzlich langsam oder instabil</li>
+            <li>SSD- oder RAM-Upgrade mit sauberer Übernahme</li>
+            <li>Wichtige Daten müssen vor einem Defekt gesichert werden</li>
           </ul>
-        </div>
-      </aside>
+        </article>
+      </div>
     </section>
 
-    <section class="shell signal-band" aria-label="Leistungsüberblick">
-      <article>
-        <strong>Reparatur</strong>
-        <span>Defekte Komponenten, Startfehler, Kühlung, Display, Akku und mehr</span>
-      </article>
-      <article>
-        <strong>Aufrüstung</strong>
-        <span>SSD, RAM, Systemwechsel, Treiberpflege und saubere Leistungsgewinne</span>
-      </article>
-      <article>
-        <strong>Daten</strong>
-        <span>Sichern, retten, übertragen und Wiederanlauf sauber vorbereiten</span>
-      </article>
-      <article>
-        <strong>Beratung</strong>
-        <span>Klare Einschätzung, ob Reparatur, Upgrade oder Neukauf sinnvoll ist</span>
-      </article>
-    </section>
-
-    <section class="shell section-block" id="leistungen">
+    <section class="shell section">
       <div class="section-heading">
-        <p class="eyebrow">Leistungen</p>
-        <h2>Technische Hilfe, die sich am echten Problem orientiert</h2>
-        <p>
-          Pixel&amp;Parts deckt die typischen Problemfälle im Alltag und im Homeoffice ab:
-          Reparaturen, Aufrüstung, Updates, Datenrettung und Beratung. Kein aufgeblähter
-          Werkzeugkasten, sondern sinnvolle Maßnahmen mit nachvollziehbarem Ergebnis.
-        </p>
+        <p class="eyebrow">Kurzüberblick</p>
+        <h2>Die wichtigsten Bereiche auf einen Blick.</h2>
+        <p>Leistungen, Ablauf, häufige Fragen und Kontaktwege sind klar getrennt, damit du schnell beim passenden Thema landest.</p>
       </div>
 
-      <div class="card-grid card-grid-three">
-        <article class="feature-card">
-          <h3>PC-Reparaturen</h3>
-          <p>Fehlerdiagnose, Austausch defekter Bauteile, Temperaturprobleme, Bluescreens, Startfehler und instabile Systeme.</p>
+      <div class="grid-3">
+        <article class="card">
+          <h3>Reparaturen</h3>
+          <p>Fehlerdiagnose, gezielte Instandsetzung und ein klarer Blick auf Temperatur, Stabilität und Hardwarezustand.</p>
         </article>
-        <article class="feature-card">
-          <h3>Laptop-Reparaturen</h3>
-          <p>Akku, Tastatur, Display, Ladebuchse, Scharniere, Lüfter, Wärmeprobleme und allgemeine Instandsetzung mobiler Geräte.</p>
+        <article class="card">
+          <h3>Aufrüstung</h3>
+          <p>SSD, RAM, Systempflege und sinnvolle Modernisierungen, die Geschwindigkeit und Zuverlässigkeit spürbar verbessern.</p>
         </article>
-        <article class="feature-card">
-          <h3>Hardware-Upgrades</h3>
-          <p>SSD statt HDD, mehr RAM, passende Komponenten, fachgerechter Einbau und Tests nach der Aufrüstung.</p>
-        </article>
-        <article class="feature-card">
-          <h3>Software-Upgrades &amp; Updates</h3>
-          <p>Windows-Neuinstallation, Systempflege, Treiber, Upgrade-Vorbereitung, Softwarebereinigung und bessere Alltagstauglichkeit.</p>
-        </article>
-        <article class="feature-card">
-          <h3>Datenrettung &amp; Übernahme</h3>
-          <p>Dateien sichern, Benutzerprofile umziehen, Daten ausbauen, neue Systeme vorbereiten und Übergänge ohne Chaos organisieren.</p>
-        </article>
-        <article class="feature-card">
-          <h3>Beratung</h3>
-          <p>Vor dem Kauf, vor dem Upgrade oder vor einer Reparatur: eine klare Einschätzung, was wirtschaftlich und technisch wirklich Sinn ergibt.</p>
+        <article class="card">
+          <h3>Daten</h3>
+          <p>Sichern, retten und übertragen, bevor bei Defekten, Neuinstallationen oder Gerätewechseln etwas verloren geht.</p>
         </article>
       </div>
     </section>
 
-    <section class="shell section-block" id="vorteile">
-      <div class="section-heading">
-        <p class="eyebrow">Warum Pixel&amp;Parts</p>
-        <h2>Professionell, verständlich und ohne unnötige Umwege</h2>
-        <p>
-          Gute Technikhilfe ist nicht nur eine Frage von Tools, sondern von sauberer Arbeitsweise.
-          Genau darauf ist der gesamte Auftritt von Pixel&amp;Parts ausgerichtet.
-        </p>
-      </div>
-
-      <div class="security-matrix">
-        <article class="matrix-card">
-          <h3>Klare Fehlerdiagnose</h3>
-          <p>Bevor etwas getauscht wird, wird das eigentliche Problem sauber eingegrenzt. Das spart Zeit, Geld und Frust.</p>
+    <section class="shell section">
+      <div class="grid-2">
+        <article class="card">
+          <h3>Verlässliche Einschätzung</h3>
+          <p>Vor jedem Schritt wird geprüft, ob Reparatur, Upgrade oder Ersatz wirklich sinnvoll ist. So entstehen nachvollziehbare Entscheidungen statt unnötiger Kosten.</p>
         </article>
-        <article class="matrix-card">
-          <h3>Saubere Upgrade-Pfade</h3>
-          <p>Neue SSD, mehr RAM oder ein Systemwechsel werden so geplant, dass das Ergebnis wirklich spürbar besser ist.</p>
+        <article class="card">
+          <h3>Direkte Erreichbarkeit</h3>
+          <p>Anfragen können strukturiert über das Formular oder direkt per E-Mail, Mobil oder WhatsApp gestellt werden. Dadurch bleibt der Kontakt einfach und schnell.</p>
         </article>
-        <article class="matrix-card">
-          <h3>Daten im Blick</h3>
-          <p>Bei Reparatur, Neuinstallation und Gerätewechsel wird zuerst an die Daten gedacht und nicht erst hinterher.</p>
-        </article>
-        <article class="matrix-card">
-          <h3>Ehrliche Beratung</h3>
-          <p>Wenn ein Neukauf sinnvoller ist als eine Reparatur, wird das offen gesagt. Vertrauen ist wichtiger als blindes Verkaufen.</p>
-        </article>
-        <article class="matrix-card">
-          <h3>Strukturierte Anfrageannahme</h3>
-          <p>Anfragen landen nicht in losem Chat-Chaos, sondern in einer klaren lokalen Verwaltung mit Status und Notizen.</p>
-        </article>
-        <article class="matrix-card">
-          <h3>Interne Fallverwaltung</h3>
-          <p>Anfragen bleiben intern organisiert, können geschützt bearbeitet werden und sind nicht auf der öffentlichen Website verlinkt.</p>
-        </article>
-        <article class="matrix-card">
-          <h3>Datensparsame Website</h3>
-          <p>Keine Tracker, keine Fremdskripte, keine unnötigen Drittanbieter. Die Website bleibt bewusst schlank und schnell.</p>
-        </article>
-        <article class="matrix-card">
-          <h3>Direkter Weg zur Lösung</h3>
-          <p>Ob Reparatur, Datenrettung oder Upgrade: Ziel ist immer ein funktionierendes System und eine verständliche Rückmeldung.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="shell section-block process-block" id="ablauf">
-      <div class="section-heading">
-        <p class="eyebrow">Ablauf</p>
-        <h2>So läuft eine Anfrage bei Pixel&amp;Parts ab</h2>
-      </div>
-
-      <ol class="timeline">
-        <li>
-          <strong>1. Anfrage erfassen</strong>
-          <p>Problem, Gerät, gewünschte Leistung und Kontaktweg werden strukturiert aufgenommen, damit der Einstieg sofort klar ist.</p>
-        </li>
-        <li>
-          <strong>2. Diagnose &amp; Einschätzung</strong>
-          <p>Es wird geprüft, ob Reparatur, Upgrade, Datenrettung oder eine andere Lösung der sinnvollste Weg ist.</p>
-        </li>
-        <li>
-          <strong>3. Umsetzung</strong>
-          <p>Reparatur, Einbau, Installation oder Datenübernahme werden nachvollziehbar und mit Blick auf Stabilität umgesetzt.</p>
-        </li>
-        <li>
-          <strong>4. Rückmeldung</strong>
-          <p>Am Ende steht kein Fragezeichen, sondern ein klares Ergebnis mit Empfehlung für die nächsten sinnvollen Schritte.</p>
-        </li>
-      </ol>
-    </section>
-
-    <section class="shell section-block" id="faq">
-      <div class="section-heading">
-        <p class="eyebrow">FAQ</p>
-        <h2>Fragen, die vor einer Anfrage oft auftauchen</h2>
-      </div>
-
-      <div class="card-grid card-grid-two">
-        <article class="feature-card">
-          <h3>Lohnt sich eine Reparatur überhaupt noch?</h3>
-          <p>Das hängt von Alter, Defekt, Leistungsbedarf und Kosten ab. Pixel&amp;Parts sagt offen, wenn ein Upgrade oder ein Neukauf die bessere Lösung ist.</p>
-        </article>
-        <article class="feature-card">
-          <h3>Kann ein langsamer Rechner spürbar schneller werden?</h3>
-          <p>In vielen Fällen ja. Gerade SSD- und RAM-Upgrades oder eine saubere Systembereinigung bringen im Alltag oft den größten Unterschied.</p>
-        </article>
-        <article class="feature-card">
-          <h3>Was passiert mit meinen Daten?</h3>
-          <p>Daten werden bei kritischen Eingriffen mitgedacht. Wenn eine Sicherung oder Übernahme sinnvoll ist, wird das nicht erst am Ende angesprochen.</p>
-        </article>
-        <article class="feature-card">
-          <h3>Wie komme ich schnell zur richtigen Lösung?</h3>
-          <p>Am besten direkt über das Anfrageformular. Dort landet alles sauber im System und kann ohne Medienbruch weiterbearbeitet werden.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="shell section-block" id="anfrage">
-      <div class="section-heading">
-        <p class="eyebrow">Anfrage</p>
-        <h2>Reparatur, Upgrade oder Datenrettung direkt strukturiert anfragen</h2>
-        <p>
-          Das Formular überträgt deine Anfrage direkt in die lokale Pixel&amp;Parts-Datenbank, sobald
-          das Backend erreichbar ist. Ist die Verbindung vorübergehend weg, wird die Anfrage auf
-          diesem Gerät zwischengespeichert und automatisch nachgesendet.
-        </p>
-      </div>
-
-      <div class="request-grid">
-        <article class="feature-card request-copy">
-          <div class="status-chip" id="backend-chip">Backend wird geprüft</div>
-          <h3>Direkt in die Anfragezentrale</h3>
-          <p>
-            Neue Anfragen werden ohne Umweg in der lokalen Verwaltung gespeichert. So sind sie
-            intern sofort sichtbar und können ohne Medienbruch weiterbearbeitet werden.
-          </p>
-          <ul class="pill-list">
-            <li>Reparaturen</li>
-            <li>Upgrades</li>
-            <li>Updates</li>
-            <li>Datenrettung</li>
-            <li>Beratung</li>
-          </ul>
-          <div class="cta-stack">
-            <p class="queue-note" id="queue-note">Noch keine offline zwischengespeicherten Anfragen auf diesem Gerät.</p>
-          </div>
-          <p class="backend-note" id="backend-note">
-            Das Formular verbindet sich automatisch mit dem Anfrage-Backend. Wenn die Verbindung
-            steht, wird die Anfrage direkt in der lokalen Datenbank gespeichert.
-          </p>
-        </article>
-
-        <form class="request-form" id="request-form" method="post" action="./api/inquiries" novalidate>
-          <div class="form-grid">
-            <label class="input-group">
-              <span>Name</span>
-              <input type="text" name="name" autocomplete="name" required>
-            </label>
-            <label class="input-group">
-              <span>E-Mail</span>
-              <input type="email" name="email" autocomplete="email" required>
-            </label>
-            <label class="input-group">
-              <span>Telefon</span>
-              <input type="tel" name="phone" autocomplete="tel">
-            </label>
-            <label class="input-group">
-              <span>Leistung</span>
-              <select name="serviceType" required>
-                <option value="">Bitte auswählen</option>
-                <option>PC-Reparatur</option>
-                <option>Laptop-Reparatur</option>
-                <option>Hardware-Upgrade</option>
-                <option>Software-Upgrade / Update</option>
-                <option>Datenrettung</option>
-                <option>Beratung</option>
-              </select>
-            </label>
-            <label class="input-group input-group-wide">
-              <span>Gerät</span>
-              <input type="text" name="deviceType" placeholder="z. B. Gaming-PC, ThinkPad, Office-Laptop">
-            </label>
-            <label class="input-group input-group-wide">
-              <span>Bevorzugter Kontaktweg</span>
-              <select name="preferredContact">
-                <option>E-Mail</option>
-                <option>Telefon</option>
-                <option>WhatsApp</option>
-              </select>
-            </label>
-            <label class="input-group input-group-full">
-              <span>Problembeschreibung</span>
-              <textarea name="message" rows="6" placeholder="Beschreibe kurz den Fehler, das gewünschte Upgrade oder welche Daten gerettet werden sollen." required></textarea>
-            </label>
-          </div>
-
-          <input type="hidden" name="source" value="website">
-          <label class="honeypot" aria-hidden="true" tabindex="-1">
-            <span>Bitte leer lassen</span>
-            <input type="text" name="website" autocomplete="off" tabindex="-1">
-          </label>
-          <button class="button button-primary" id="request-submit" type="submit">Anfrage senden</button>
-          <p class="field-hint" id="request-hint">Wenn das Backend online ist, wird direkt in SQLite gespeichert. Bei Verbindungsproblemen wird die Anfrage auf diesem Gerät gepuffert und später nachgesendet.</p>
-          <p class="field-feedback" id="request-feedback" aria-live="polite"></p>
-        </form>
-      </div>
-    </section>
-
-    <section class="shell section-block contact-block" id="kontakt">
-      <div class="section-heading">
-        <p class="eyebrow">Kontakt</p>
-        <h2>Der schnellste Weg führt über das Anfrageformular, E-Mail oder Mobil</h2>
-        <p>
-          Am schnellsten ist eine strukturierte Anfrage über das Formular. Wenn es direkter sein soll,
-          sind E-Mail, Mobil und WhatsApp ebenfalls erreichbar.
-        </p>
-      </div>
-
-      <div class="contact-panel">
-        <div class="contact-copy">
-          <p class="contact-kicker">Pixel&amp;Parts</p>
-          <h3>Werkstattauftritt und Anfrageverwaltung aus einem Guss</h3>
-          <p>
-            Die öffentliche Website nimmt Anfragen professionell auf, während die interne Fallverwaltung
-            alle Fälle sauber bündelt. Dadurch bleibt der Außenauftritt schlank und die operative
-            Arbeit im Hintergrund gut organisiert.
-          </p>
-          <ul class="contact-list">
-            <li>Rückmeldung über den gewünschten Kontaktweg</li>
-            <li>Interne Statusführung je Anfrage</li>
-            <li>Saubere Bearbeitung ohne Medienbruch</li>
-          </ul>
-        </div>
-
-        <div class="contact-actions">
-          <a class="button button-primary" href="#anfrage">Jetzt Anfrage stellen</a>
-          <a class="button button-secondary" href="mailto:koelbeldomenik@web.de">koelbeldomenik@web.de</a>
-          <a class="button button-secondary" href="tel:+491771680815">0177 1680815</a>
-          <a class="button button-secondary" href="https://wa.me/4915751713843" rel="noreferrer">WhatsApp schreiben</a>
-          <p class="contact-note">Die Anfragezentrale speichert neue Fälle direkt lokal in SQLite, sobald das Backend erreichbar ist.</p>
-        </div>
       </div>
     </section>
   </main>
@@ -373,18 +118,27 @@
   <footer class="site-footer">
     <div class="shell footer-grid">
       <div>
-        <p class="footer-brand">Pixel&amp;Parts</p>
-        <p>PC- und Laptop-Reparaturen, Aufrüstung, Datenrettung und verständliche IT-Beratung.</p>
-        <p><a href="mailto:koelbeldomenik@web.de">koelbeldomenik@web.de</a></p>
+        <p class="footer-title">Pixel &amp; Parts</p>
+        <p>PC- und Laptop-Service in Köln-Mülheim mit Fokus auf Reparatur, Aufrüstung, Datenrettung und technischer Beratung.</p>
       </div>
       <div>
-        <a href="#leistungen">Leistungen</a>
-        <a href="#anfrage">Anfrage</a>
-        <a href="datenschutz.html">Datenschutz</a>
+        <p class="footer-title">Seiten</p>
+        <ul class="footer-list">
+          <li><a href="leistungen.html">Leistungen</a></li>
+          <li><a href="anfrage.html">Anfrage</a></li>
+          <li><a href="kontakt.html">Kontakt</a></li>
+          <li><a href="impressum.html">Impressum</a></li>
+          <li><a href="datenschutz.html">Datenschutz</a></li>
+        </ul>
       </div>
       <div>
-        <p>Sicherheitskontakt:</p>
-        <a href=".well-known/security.txt">security.txt</a>
+        <p class="footer-title">Direkter Kontakt</p>
+        <ul class="footer-list">
+          <li><a href="mailto:koelbeldomenik@web.de">koelbeldomenik@web.de</a></li>
+          <li><a href="tel:+491771680815">0177 1680815</a></li>
+          <li><a href="https://wa.me/4915751713843" rel="noreferrer">WhatsApp</a></li>
+          <li><a href=".well-known/security.txt">security.txt</a></li>
+        </ul>
       </div>
     </div>
   </footer>
