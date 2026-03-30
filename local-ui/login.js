@@ -3,7 +3,7 @@ const feedback = document.getElementById("login-feedback");
 
 loginForm?.addEventListener("submit", async (event) => {
   event.preventDefault();
-  feedback.textContent = "Anmeldung wird geprueft...";
+  feedback.textContent = "Anmeldung wird geprüft ...";
 
   const formData = new FormData(loginForm);
   const payload = Object.fromEntries(formData.entries());
@@ -13,7 +13,7 @@ loginForm?.addEventListener("submit", async (event) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Accept": "application/json"
+        Accept: "application/json"
       },
       body: JSON.stringify(payload)
     });

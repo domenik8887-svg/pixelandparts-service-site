@@ -127,12 +127,12 @@ app.patch("/dashboard/api/inquiries/:id", requireAuth, (req, res) => {
   const notes = normalizeText(req.body.notes, 3000);
 
   if (!Number.isInteger(inquiryId) || inquiryId < 1) {
-    res.status(400).json({ error: "Ungueltige Anfrage-ID." });
+    res.status(400).json({ error: "Ungültige Anfrage-ID." });
     return;
   }
 
   if (!allowedStatuses.has(status)) {
-    res.status(400).json({ error: "Ungueltiger Status." });
+    res.status(400).json({ error: "Ungültiger Status." });
     return;
   }
 
@@ -167,7 +167,7 @@ app.get("/dashboard/api/export.csv", requireAuth, (_req, res) => {
       "E-Mail",
       "Telefon",
       "Leistung",
-      "Geraet",
+      "Gerät",
       "Kontaktweg",
       "Quelle",
       "Nachricht",
@@ -282,10 +282,10 @@ app.listen(port, host, () => {
     console.log(`- ${url}`);
   }
   if (publicConfig.apiBaseUrl) {
-    console.log(`Oeffentliche API: ${publicConfig.apiBaseUrl}`);
+    console.log(`Öffentliche API: ${publicConfig.apiBaseUrl}`);
   }
   if (publicConfig.dashboardUrl) {
-    console.log(`Oeffentliches Dashboard: ${publicConfig.dashboardUrl}`);
+    console.log(`Öffentliches Dashboard: ${publicConfig.dashboardUrl}`);
   }
 });
 
@@ -419,7 +419,7 @@ function createRateLimiter({ windowMs, limit }) {
     hits.set(key, freshHits);
 
     if (freshHits.length > limit) {
-      const payload = "Zu viele Versuche. Bitte spaeter noch einmal probieren.";
+      const payload = "Zu viele Versuche. Bitte später noch einmal probieren.";
       if (wantsJson(req)) {
         res.status(429).json({ error: payload });
         return;
@@ -533,11 +533,11 @@ function validateInquiry(inquiry) {
   }
 
   if (!inquiry.name || !inquiry.email || !inquiry.serviceType || !inquiry.message) {
-    return "Bitte Name, E-Mail, Leistung und Beschreibung ausfuellen.";
+    return "Bitte Name, E-Mail, Leistung und Beschreibung ausfüllen.";
   }
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inquiry.email)) {
-    return "Bitte eine gueltige E-Mail-Adresse angeben.";
+    return "Bitte eine gültige E-Mail-Adresse angeben.";
   }
 
   return null;

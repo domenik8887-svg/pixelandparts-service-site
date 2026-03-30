@@ -25,7 +25,7 @@ async function main() {
     startLocalServer();
     await waitForHealthy(`${localServerUrl}/api/health`, 30000);
   } else {
-    console.log("Lokaler Pixel&Parts-Server laeuft bereits.");
+    console.log("Lokaler Pixel&Parts-Server läuft bereits.");
   }
 
   const publicUrl = await startCloudflareTunnel();
@@ -56,10 +56,10 @@ async function main() {
     console.log("Die GitHub-Page-Konfiguration war bereits aktuell.");
   }
 
-  console.log(`Oeffentliche API: ${publicUrl}`);
-  console.log(`Oeffentliches Dashboard: ${dashboardUrl}`);
+  console.log(`Öffentliche API: ${publicUrl}`);
+  console.log(`Öffentliches Dashboard: ${dashboardUrl}`);
   console.log("Die GitHub-Page nutzt jetzt diese API-Adresse. Falls GitHub Pages noch cached, kurz neu laden.");
-  console.log("Der Tunnel bleibt offen, solange dieses Fenster laeuft.");
+  console.log("Der Tunnel bleibt offen, solange dieses Fenster läuft.");
 
   process.on("SIGINT", shutdown);
   process.on("SIGTERM", shutdown);
@@ -94,7 +94,7 @@ function resolveCloudflaredPath() {
 }
 
 function startLocalServer() {
-  console.log("Lokaler Server wird gestartet...");
+  console.log("Lokaler Server wird gestartet ...");
   serverProcess = spawn(process.execPath, ["server.js"], {
     cwd: rootDir,
     stdio: ["ignore", "pipe", "pipe"]
@@ -116,7 +116,7 @@ function startLocalServer() {
 }
 
 async function startCloudflareTunnel() {
-  console.log("Cloudflare Quick Tunnel wird aufgebaut...");
+  console.log("Cloudflare Quick Tunnel wird aufgebaut ...");
   tunnelProcess = spawn(cloudflaredPath, ["tunnel", "--url", localServerUrl, "--no-autoupdate"], {
     cwd: rootDir,
     stdio: ["ignore", "pipe", "pipe"]
@@ -124,7 +124,7 @@ async function startCloudflareTunnel() {
 
   return new Promise((resolve, reject) => {
     const timeout = setTimeout(() => {
-      reject(new Error("Es konnte keine oeffentliche Tunnel-URL ermittelt werden."));
+      reject(new Error("Es konnte keine öffentliche Tunnel-URL ermittelt werden."));
     }, 60000);
 
     const handleChunk = (chunk) => {
@@ -182,12 +182,12 @@ async function publishConfigChange() {
         stdio: "ignore"
       });
     } catch {
-      console.log("Keine neue Git-Aenderung fuer public-config.json zu committen.");
+      console.log("Keine neue Git-Änderung für public-config.json zu committen.");
       return;
     }
 
     execFileSync("git", ["push"], { cwd: rootDir, stdio: "ignore" });
-    console.log("Die neue oeffentliche API-Adresse wurde zu GitHub gepusht.");
+    console.log("Die neue öffentliche API-Adresse wurde zu GitHub gepusht.");
   } catch (error) {
     console.log(`Die GitHub-Page-Konfiguration wurde lokal aktualisiert, konnte aber nicht automatisch gepusht werden: ${error.message}`);
   }

@@ -1,7 +1,10 @@
 const backendChip = document.getElementById("backend-chip");
 const backendNote = document.getElementById("backend-note");
 const queueNote = document.getElementById("queue-note");
-const dashboardLink = document.getElementById("dashboard-link");
+const dashboardLinks = [
+  document.getElementById("dashboard-link"),
+  document.getElementById("dashboard-link-contact")
+].filter(Boolean);
 const requestForm = document.getElementById("request-form");
 const requestSubmit = document.getElementById("request-submit");
 const requestHint = document.getElementById("request-hint");
@@ -12,7 +15,6 @@ const PENDING_STORAGE_KEY = "pixelparts-pending-requests";
 const state = {
   apiBaseUrl: "",
   dashboardUrl: "",
-  sameOriginBackend: false,
   backendReady: false
 };
 
@@ -35,11 +37,11 @@ const updateQueueNote = () => {
 
   const pending = getPendingRequests();
   if (pending.length === 0) {
-    queueNote.textContent = "Noch keine offline zwischengespeicherten Anfragen auf diesem Geraet.";
+    queueNote.textContent = "Noch keine offline zwischengespeicherten Anfragen auf diesem Gerät.";
     return;
   }
 
-  queueNote.textContent = `${pending.length} Anfrage(n) warten lokal auf diesem Geraet und werden automatisch nachgesendet, sobald das Backend wieder erreichbar ist.`;
+  queueNote.textContent = `${pending.length} Anfrage(n) warten lokal auf diesem Gerät und werden automatisch nachgesendet, sobald das Backend wieder erreichbar ist.`;
 };
 
 const setFeedback = (message, stateName = "") => {
@@ -63,19 +65,17 @@ const setBackendState = ({ chip, note, hint, ready }) => {
   requestSubmit.textContent = ready ? "Anfrage direkt senden" : "Anfrage offline sichern";
 };
 
-const updateDashboardLink = () => {
-  if (!dashboardLink) {
-    return;
-  }
+const updateDashboardLinks = () => {
+  for (const link of dashboardLinks) {
+    if (!state.dashboardUrl) {
+      link.classList.add("is-hidden");
+      link.removeAttribute("href");
+      continue;
+    }
 
-  if (!state.dashboardUrl) {
-    dashboardLink.classList.add("is-hidden");
-    dashboardLink.removeAttribute("href");
-    return;
+    link.href = state.dashboardUrl;
+    link.classList.remove("is-hidden");
   }
-
-  dashboardLink.href = state.dashboardUrl;
-  dashboardLink.classList.remove("is-hidden");
 };
 
 const useReadyMode = () => {
@@ -83,8 +83,8 @@ const useReadyMode = () => {
   setBackendState({
     chip: "ready",
     ready: true,
-    note: "Die GitHub-Page kann jetzt direkt an dein oeffentlich erreichbares Anfrage-Backend senden. Jede neue Anfrage landet sofort in der lokalen SQLite-Datenbank.",
-    hint: "Neue Anfragen werden sofort an dein Anfrage-Backend gesendet und direkt in SQLite gespeichert."
+    note: "Das Anfrage-Backend ist erreichbar. Neue Anfragen werden jetzt direkt in der lokalen SQLite-Datenbank gespeichert.",
+    hint: "Neue Anfragen werden sofort an das Pixel&Parts-Backend gesendet und direkt in SQLite gespeichert."
   });
 };
 
@@ -93,8 +93,8 @@ const useOfflineMode = () => {
   setBackendState({
     chip: getPendingRequests().length > 0 ? "queued" : "offline",
     ready: false,
-    note: "Das Anfrage-Backend ist gerade nicht erreichbar. Neue Anfragen werden auf diesem Geraet offline gepuffert und automatisch an dein lokales SQLite-Backend nachgeliefert, sobald es wieder online ist.",
-    hint: "Ohne erreichbares Backend wird die Anfrage lokal im Browser gespeichert und spaeter automatisch an dein SQLite-System gesendet."
+    note: "Das Anfrage-Backend ist gerade nicht erreichbar. Neue Anfragen werden auf diesem Gerät offline zwischengespeichert und automatisch nachgeliefert, sobald die Verbindung wieder steht.",
+    hint: "Ohne erreichbares Backend wird die Anfrage lokal im Browser gesichert und später automatisch an das SQLite-System übertragen."
   });
 };
 
@@ -103,7 +103,7 @@ const normalizeOrigin = (value) => String(value || "").replace(/\/+$/, "");
 const isLocalBackendOrigin = async () => {
   try {
     const response = await fetch("./api/health", {
-      headers: { "Accept": "application/json" },
+      headers: { Accept: "application/json" },
       cache: "no-store"
     });
 
@@ -121,7 +121,7 @@ const isLocalBackendOrigin = async () => {
 const loadPublicConfig = async () => {
   try {
     const response = await fetch(`./public-config.json?ts=${Date.now()}`, {
-      headers: { "Accept": "application/json" },
+      headers: { Accept: "application/json" },
       cache: "no-store"
     });
 
@@ -142,7 +142,7 @@ const probeBackend = async (baseUrl) => {
 
   try {
     const response = await fetch(`${normalizeOrigin(baseUrl)}/api/health`, {
-      headers: { "Accept": "application/json" },
+      headers: { Accept: "application/json" },
       cache: "no-store"
     });
 
@@ -185,7 +185,7 @@ const flushPendingRequests = async () => {
       const response = await fetch(`${normalizeOrigin(state.apiBaseUrl)}/api/inquiries`, {
         method: "POST",
         headers: {
-          "Accept": "application/json",
+          Accept: "application/json",
           "Content-Type": "application/json"
         },
         body: JSON.stringify(entry)
@@ -203,7 +203,7 @@ const flushPendingRequests = async () => {
   updateQueueNote();
 
   if (remaining.length === 0 && state.backendReady) {
-    setFeedback("Alle zwischengespeicherten Anfragen wurden erfolgreich an dein SQLite-Backend uebertragen.", "success");
+    setFeedback("Alle zwischengespeicherten Anfragen wurden erfolgreich an das lokale SQLite-Backend übertragen.", "success");
   } else if (remaining.length > 0) {
     useOfflineMode();
   }
@@ -216,12 +216,10 @@ const loadRuntime = async () => {
 
   updateQueueNote();
 
-  const sameOriginBackend = await isLocalBackendOrigin();
-  if (sameOriginBackend) {
-    state.sameOriginBackend = true;
+  if (await isLocalBackendOrigin()) {
     state.apiBaseUrl = window.location.origin;
     state.dashboardUrl = `${window.location.origin}/login`;
-    updateDashboardLink();
+    updateDashboardLinks();
     useReadyMode();
     await flushPendingRequests();
     return;
@@ -230,7 +228,7 @@ const loadRuntime = async () => {
   const publicConfig = await loadPublicConfig();
   state.apiBaseUrl = normalizeOrigin(publicConfig.apiBaseUrl || "");
   state.dashboardUrl = publicConfig.dashboardUrl || "";
-  updateDashboardLink();
+  updateDashboardLinks();
 
   if (await probeBackend(state.apiBaseUrl)) {
     useReadyMode();
@@ -254,7 +252,7 @@ const validateForm = () => {
 
   const payload = collectPayload();
   if (payload.website) {
-    setFeedback("Anfrage konnte nicht verarbeitet werden.", "error");
+    setFeedback("Die Anfrage konnte nicht verarbeitet werden.", "error");
     return false;
   }
 
@@ -265,7 +263,7 @@ const sendInquiry = async (payload) => {
   const response = await fetch(`${normalizeOrigin(state.apiBaseUrl)}/api/inquiries`, {
     method: "POST",
     headers: {
-      "Accept": "application/json",
+      Accept: "application/json",
       "Content-Type": "application/json"
     },
     body: JSON.stringify(payload)
@@ -273,7 +271,7 @@ const sendInquiry = async (payload) => {
 
   if (!response.ok) {
     const text = await response.text();
-    throw new Error(text || "Anfrage konnte nicht gesendet werden.");
+    throw new Error(text || "Die Anfrage konnte nicht gesendet werden.");
   }
 
   return response.json();
@@ -290,11 +288,11 @@ const handleSubmit = async (event) => {
   delete payload.website;
 
   requestSubmit.disabled = true;
-  setFeedback("Anfrage wird verarbeitet...", "");
+  setFeedback("Anfrage wird verarbeitet ...");
 
   if (!state.apiBaseUrl || !navigator.onLine || !state.backendReady) {
     queueInquiry(payload);
-    setFeedback("Das Backend ist gerade nicht erreichbar. Die Anfrage wurde offline auf diesem Geraet gesichert und wird spaeter automatisch in SQLite uebertragen.", "warning");
+    setFeedback("Das Backend ist gerade nicht erreichbar. Die Anfrage wurde offline auf diesem Gerät gesichert und wird später automatisch in SQLite übertragen.", "warning");
     requestForm.reset();
     requestSubmit.disabled = false;
     return;
@@ -302,14 +300,14 @@ const handleSubmit = async (event) => {
 
   try {
     await sendInquiry(payload);
-    setFeedback("Anfrage erfolgreich gespeichert. Du wirst jetzt zur Bestaetigungsseite weitergeleitet.", "success");
+    setFeedback("Anfrage erfolgreich gespeichert. Weiterleitung zur Bestätigungsseite ...", "success");
     requestForm.reset();
     setTimeout(() => {
       window.location.href = "./anfrage-erfolgreich.html";
     }, 700);
   } catch (error) {
     queueInquiry(payload);
-    setFeedback(`${error.message} Die Anfrage wurde deshalb offline auf diesem Geraet zwischengespeichert.`, "warning");
+    setFeedback(`${error.message} Die Anfrage wurde deshalb offline zwischengespeichert.`, "warning");
     requestForm.reset();
   } finally {
     requestSubmit.disabled = false;
@@ -324,7 +322,7 @@ const registerServiceWorker = async () => {
   try {
     await navigator.serviceWorker.register("./sw.js");
   } catch {
-    // Service worker is optional; ignore registration failures.
+    // Optional feature.
   }
 };
 

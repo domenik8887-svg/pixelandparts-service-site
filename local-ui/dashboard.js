@@ -45,7 +45,7 @@ const createCard = (inquiry) => {
   meta.className = "meta-list";
   [
     inquiry.serviceType,
-    inquiry.deviceType || "Geraet offen",
+    inquiry.deviceType || "Gerät offen",
     inquiry.preferredContact,
     formatDate(inquiry.createdAt)
   ].forEach((entry) => {
@@ -58,7 +58,7 @@ const createCard = (inquiry) => {
 
   const tags = document.createElement("ul");
   tags.className = "tag-list";
-  [inquiry.status, inquiry.email, inquiry.phone || "Kein Telefon"].forEach((entry) => {
+  [inquiry.status, inquiry.email, inquiry.phone || "Keine Telefonnummer"].forEach((entry) => {
     const item = document.createElement("li");
     item.textContent = entry;
     tags.appendChild(item);
@@ -84,7 +84,7 @@ const createCard = (inquiry) => {
 
   const notes = document.createElement("textarea");
   notes.value = inquiry.notes || "";
-  notes.placeholder = "Notizen fuer Rueckruf, Angebot oder Status";
+  notes.placeholder = "Notizen für Rückruf, Angebot oder nächsten Schritt";
 
   const saveButton = document.createElement("button");
   saveButton.className = "save-button";
@@ -95,13 +95,13 @@ const createCard = (inquiry) => {
 
   editor.addEventListener("submit", async (event) => {
     event.preventDefault();
-    setFeedback(`Anfrage #${inquiry.id} wird gespeichert...`);
+    setFeedback(`Anfrage #${inquiry.id} wird gespeichert ...`);
 
     const response = await fetch(`/dashboard/api/inquiries/${inquiry.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        "Accept": "application/json"
+        Accept: "application/json"
       },
       body: JSON.stringify({
         status: statusSelect.value,
@@ -156,7 +156,10 @@ const renderList = () => {
   if (filtered.length === 0) {
     const empty = document.createElement("div");
     empty.className = "empty-state";
-    empty.textContent = "Keine passenden Anfragen gefunden.";
+    const hasFilters = Boolean(query) || selectedStatus !== "Alle";
+    empty.textContent = hasFilters
+      ? "Keine passenden Anfragen gefunden."
+      : "Aktuell sind keine Anfragen gespeichert. Neue Website-Anfragen erscheinen hier automatisch.";
     inquiryList.appendChild(empty);
     return;
   }
@@ -168,10 +171,10 @@ const renderList = () => {
 
 const loadDashboard = async () => {
   try {
-    setFeedback("Anfragen werden geladen...");
+    setFeedback("Anfragen werden geladen ...");
     const response = await fetch("/dashboard/api/inquiries", {
       headers: {
-        "Accept": "application/json"
+        Accept: "application/json"
       }
     });
 
@@ -199,7 +202,7 @@ logoutButton?.addEventListener("click", async () => {
   await fetch("/auth/logout", {
     method: "POST",
     headers: {
-      "Accept": "application/json"
+      Accept: "application/json"
     }
   });
 

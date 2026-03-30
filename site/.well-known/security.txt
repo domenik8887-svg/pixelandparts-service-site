@@ -1,4 +1,3 @@
-Contact: mailto:security@pixelandparts.de
-Contact: mailto:kontakt@pixelandparts.de
+Contact: https://domenik8887-svg.github.io/pixelandparts-service-site/#anfrage
 Preferred-Languages: de, en
 Expires: 2027-03-30T23:59:59Z

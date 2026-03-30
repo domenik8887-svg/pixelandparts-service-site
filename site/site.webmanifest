@@ -1,7 +1,7 @@
 {
   "name": "Pixel&Parts",
   "short_name": "Pixel&Parts",
-  "description": "PC- und Laptop-Reparaturen, Upgrades, Datenrettung und Beratung von Pixel&Parts.",
+  "description": "PC- und Laptop-Reparaturen, Aufrüstung, Datenrettung und Beratung von Pixel&Parts.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

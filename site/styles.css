@@ -34,6 +34,7 @@ body {
     linear-gradient(180deg, #09101c 0%, #0b1527 38%, #07101d 100%);
   font-family: "Aptos", "Segoe UI Variable Text", "Segoe UI", sans-serif;
   line-height: 1.6;
+  text-rendering: optimizeLegibility;
 }
 
 body::before {
@@ -225,6 +226,7 @@ h1,
 h2 {
   line-height: 1.08;
   margin: 0;
+  text-wrap: balance;
 }
 
 h1 {
@@ -383,6 +385,7 @@ h3 {
 
 .section-block {
   padding: 5.5rem 0 0;
+  scroll-margin-top: 6rem;
 }
 
 .section-heading {
@@ -414,6 +417,13 @@ h3 {
   padding: 1.35rem;
   border-radius: var(--radius-lg);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
+}
+
+.feature-card p,
+.matrix-card p,
+.contact-panel p,
+.legal-card p {
+  max-width: 62ch;
 }
 
 .feature-card {
@@ -675,6 +685,10 @@ h3 {
   display: grid;
   align-content: start;
   gap: 0.75rem;
+}
+
+.contact-actions .button {
+  width: 100%;
 }
 
 .contact-list {
