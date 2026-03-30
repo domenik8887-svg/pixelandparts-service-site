@@ -155,6 +155,31 @@ app.patch("/dashboard/api/inquiries/:id", requireAuth, (req, res) => {
   });
 });
 
+app.delete("/dashboard/api/inquiries/:id", requireAuth, (req, res) => {
+  const inquiryId = Number(req.params.id);
+
+  if (!Number.isInteger(inquiryId) || inquiryId < 1) {
+    res.status(400).json({ error: "Ungültige Anfrage-ID." });
+    return;
+  }
+
+  const statement = db.prepare("DELETE FROM inquiries WHERE id = ?");
+  const result = statement.run(inquiryId);
+
+  if (result.changes === 0) {
+    res.status(404).json({ error: "Anfrage nicht gefunden." });
+    return;
+  }
+
+  syncInquirySequence();
+
+  res.json({
+    ok: true,
+    deletedId: inquiryId,
+    stats: getStats()
+  });
+});
+
 app.get("/dashboard/api/export.csv", requireAuth, (_req, res) => {
   const inquiries = listInquiries();
   const lines = [getInquiryExportHeaders().join(";")];
@@ -732,6 +757,25 @@ function createInquiryWorkbook(inquiries) {
   });
 
   return workbook;
+}
+
+function syncInquirySequence() {
+  const remaining = db.prepare("SELECT COUNT(*) AS count FROM inquiries").get().count;
+
+  if (remaining === 0) {
+    db.prepare("DELETE FROM sqlite_sequence WHERE name = 'inquiries'").run();
+    return;
+  }
+
+  const maxId = db.prepare("SELECT MAX(id) AS maxId FROM inquiries").get().maxId;
+  const existing = db.prepare("SELECT 1 AS found FROM sqlite_sequence WHERE name = 'inquiries'").get();
+
+  if (existing) {
+    db.prepare("UPDATE sqlite_sequence SET seq = ? WHERE name = 'inquiries'").run(maxId);
+    return;
+  }
+
+  db.prepare("INSERT INTO sqlite_sequence (name, seq) VALUES ('inquiries', ?)").run(maxId);
 }
 
 function getClientIdentifier(req) {

@@ -74,7 +74,8 @@ h1 {
 }
 
 .ghost-button,
-.save-button {
+.save-button,
+.delete-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -97,10 +98,18 @@ h1 {
   color: #fff;
 }
 
+.delete-button {
+  background: #fff4f1;
+  border-color: #e2b8ae;
+  color: #8d3a32;
+}
+
 .ghost-button:hover,
 .ghost-button:focus-visible,
 .save-button:hover,
 .save-button:focus-visible,
+.delete-button:hover,
+.delete-button:focus-visible,
 .custom-select-button:hover,
 .custom-select-button:focus-visible {
   transform: translateY(-1px);
@@ -239,6 +248,11 @@ h1 {
   grid-template-columns: 240px minmax(0, 1fr) 150px;
   gap: 0.85rem;
   align-items: start;
+}
+
+.editor-actions {
+  display: grid;
+  gap: 0.75rem;
 }
 
 .editor-grid textarea {

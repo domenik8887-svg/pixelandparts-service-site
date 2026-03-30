@@ -171,7 +171,16 @@ function createCard(inquiry) {
   saveButton.type = "submit";
   saveButton.textContent = "Speichern";
 
-  editor.append(statusSelect, notes, saveButton);
+  const deleteButton = document.createElement("button");
+  deleteButton.className = "delete-button";
+  deleteButton.type = "button";
+  deleteButton.textContent = "Löschen";
+
+  const actionGroup = document.createElement("div");
+  actionGroup.className = "editor-actions";
+  actionGroup.append(saveButton, deleteButton);
+
+  editor.append(statusSelect, notes, actionGroup);
   article.append(head, messageBox, editor);
 
   enhanceCustomSelects(article);
@@ -206,6 +215,36 @@ function createCard(inquiry) {
     updateStats(data.stats);
     renderList();
     setFeedback(`Anfrage #${inquiry.id} wurde gespeichert.`);
+  });
+
+  deleteButton.addEventListener("click", async () => {
+    const confirmed = window.confirm(`Anfrage #${inquiry.id} wirklich dauerhaft löschen?`);
+    if (!confirmed) {
+      return;
+    }
+
+    setFeedback(`Anfrage #${inquiry.id} wird gelöscht ...`);
+
+    const response = await fetch(`/dashboard/api/inquiries/${inquiry.id}`, {
+      method: "DELETE",
+      headers: { Accept: "application/json" }
+    });
+
+    const data = await response.json();
+    if (response.status === 401) {
+      window.location.href = "/login";
+      return;
+    }
+
+    if (!response.ok) {
+      setFeedback(data.error || "Löschen fehlgeschlagen.");
+      return;
+    }
+
+    inquiries = inquiries.filter((entry) => entry.id !== inquiry.id);
+    updateStats(data.stats);
+    renderList();
+    setFeedback(`Anfrage #${inquiry.id} wurde gelöscht.`);
   });
 
   return article;
