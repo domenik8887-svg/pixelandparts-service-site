@@ -11,6 +11,10 @@ const localUiDir = path.join(rootDir, "local-ui");
 const dataDir = path.join(rootDir, "data");
 const configPath = path.join(dataDir, "runtime-config.json");
 const dbPath = path.join(dataDir, "pixelandparts.sqlite");
+const publicConfigPath = path.join(siteDir, "public-config.json");
+
+const defaultPublicSiteUrl = process.env.PUBLIC_SITE_URL || "https://domenik8887-svg.github.io/pixelandparts-service-site";
+const defaultPublicSiteOrigin = new URL(defaultPublicSiteUrl).origin;
 
 const host = process.env.HOST || "0.0.0.0";
 const port = Number(process.env.PORT || 8080);
@@ -34,14 +38,22 @@ app.use(securityHeaders);
 app.use(cleanExpiredSessions);
 app.use("/api/inquiries", createRateLimiter({ windowMs: 15 * 60 * 1000, limit: 20 }));
 app.use("/auth/login", createRateLimiter({ windowMs: 15 * 60 * 1000, limit: 12 }));
+app.use("/api", applyPublicCors);
 app.use("/local-ui", express.static(localUiDir));
 
 app.get("/api/health", (_req, res) => {
+  const publicConfig = loadPublicSiteConfig();
   res.json({
     backend: true,
     storage: "sqlite",
-    dashboardPath: "/dashboard"
+    dashboardPath: "/dashboard",
+    publicApiUrl: publicConfig.apiBaseUrl || "",
+    publicDashboardUrl: publicConfig.dashboardUrl || ""
   });
+});
+
+app.get("/api/public-config", (_req, res) => {
+  res.json(loadPublicSiteConfig());
 });
 
 app.get("/login", (req, res) => {
@@ -194,11 +206,17 @@ app.post("/api/inquiries", (req, res) => {
     deviceType: normalizeText(req.body.deviceType, 160),
     preferredContact: normalizeText(req.body.preferredContact, 40) || "E-Mail",
     message: normalizeText(req.body.message, 3000),
-    source: normalizeText(req.body.source, 40) || "website"
+    source: normalizeText(req.body.source, 40) || "website",
+    website: normalizeText(req.body.website, 80)
   };
 
   const validationError = validateInquiry(inquiry);
   if (validationError) {
+    if (wantsJson(req)) {
+      res.status(400).json({ error: validationError });
+      return;
+    }
+
     res.status(400).send(validationError);
     return;
   }
@@ -254,6 +272,7 @@ app.use((_req, res) => {
 
 app.listen(port, host, () => {
   const urls = collectUrls(port);
+  const publicConfig = loadPublicSiteConfig();
 
   console.log("Pixel&Parts Server gestartet.");
   console.log(`Dashboard Login: ${runtimeConfig.adminUsername}`);
@@ -261,6 +280,12 @@ app.listen(port, host, () => {
   console.log("Erreichbar unter:");
   for (const url of urls) {
     console.log(`- ${url}`);
+  }
+  if (publicConfig.apiBaseUrl) {
+    console.log(`Oeffentliche API: ${publicConfig.apiBaseUrl}`);
+  }
+  if (publicConfig.dashboardUrl) {
+    console.log(`Oeffentliches Dashboard: ${publicConfig.dashboardUrl}`);
   }
 });
 
@@ -291,18 +316,45 @@ function initializeDatabase() {
 }
 
 function loadOrCreateRuntimeConfig() {
-  if (fs.existsSync(configPath)) {
-    return JSON.parse(fs.readFileSync(configPath, "utf8"));
-  }
-
-  const generated = {
+  const defaults = {
     adminUsername: "admin",
     adminPassword: generateSecret(18),
-    sessionSecret: generateSecret(32)
+    sessionSecret: generateSecret(32),
+    publicSiteUrl: defaultPublicSiteUrl,
+    publicSiteOrigin: defaultPublicSiteOrigin
   };
 
-  fs.writeFileSync(configPath, JSON.stringify(generated, null, 2), "utf8");
-  return generated;
+  if (!fs.existsSync(configPath)) {
+    fs.writeFileSync(configPath, JSON.stringify(defaults, null, 2), "utf8");
+    return defaults;
+  }
+
+  const parsed = JSON.parse(fs.readFileSync(configPath, "utf8"));
+  const merged = {
+    ...defaults,
+    ...parsed
+  };
+
+  if (JSON.stringify(parsed) !== JSON.stringify(merged)) {
+    fs.writeFileSync(configPath, JSON.stringify(merged, null, 2), "utf8");
+  }
+
+  return merged;
+}
+
+function loadPublicSiteConfig() {
+  if (!fs.existsSync(publicConfigPath)) {
+    return {
+      siteUrl: runtimeConfig.publicSiteUrl,
+      siteOrigin: runtimeConfig.publicSiteOrigin,
+      apiBaseUrl: "",
+      dashboardUrl: "",
+      status: "offline",
+      updatedAt: ""
+    };
+  }
+
+  return JSON.parse(fs.readFileSync(publicConfigPath, "utf8"));
 }
 
 function generateSecret(length) {
@@ -316,7 +368,41 @@ function securityHeaders(_req, res, next) {
   res.setHeader("Permissions-Policy", "camera=(), microphone=(), geolocation=(), payment=(), usb=()");
   res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
   res.setHeader("Cross-Origin-Resource-Policy", "same-origin");
-  res.setHeader("Content-Security-Policy", "default-src 'self'; img-src 'self' data:; style-src 'self'; font-src 'self'; script-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'");
+  res.setHeader("Content-Security-Policy", "default-src 'self'; img-src 'self' data:; style-src 'self'; font-src 'self'; script-src 'self'; connect-src 'self' https: http://localhost:8080 http://127.0.0.1:8080; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'");
+  next();
+}
+
+function applyPublicCors(req, res, next) {
+  const origin = req.headers.origin;
+  const allowedOrigins = new Set([
+    runtimeConfig.publicSiteOrigin,
+    "http://localhost:8080",
+    "http://127.0.0.1:8080"
+  ]);
+
+  res.setHeader("Vary", "Origin");
+
+  if (!origin) {
+    if (req.method === "OPTIONS") {
+      res.sendStatus(204);
+      return;
+    }
+
+    next();
+    return;
+  }
+
+  if (allowedOrigins.has(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept");
+  }
+
+  if (req.method === "OPTIONS") {
+    res.sendStatus(204);
+    return;
+  }
+
   next();
 }
 
@@ -324,7 +410,7 @@ function createRateLimiter({ windowMs, limit }) {
   const hits = new Map();
 
   return (req, res, next) => {
-    const key = `${req.ip}:${req.path}`;
+    const key = `${getClientIdentifier(req)}:${req.path}`;
     const now = Date.now();
     const current = hits.get(key) || [];
     const freshHits = current.filter((timestamp) => now - timestamp < windowMs);
@@ -333,7 +419,13 @@ function createRateLimiter({ windowMs, limit }) {
     hits.set(key, freshHits);
 
     if (freshHits.length > limit) {
-      res.status(429).send("Zu viele Versuche. Bitte spaeter noch einmal probieren.");
+      const payload = "Zu viele Versuche. Bitte spaeter noch einmal probieren.";
+      if (wantsJson(req)) {
+        res.status(429).json({ error: payload });
+        return;
+      }
+
+      res.status(429).send(payload);
       return;
     }
 
@@ -436,6 +528,10 @@ function normalizeText(value, maxLength) {
 }
 
 function validateInquiry(inquiry) {
+  if (inquiry.website) {
+    return "Anfrage konnte nicht verarbeitet werden.";
+  }
+
   if (!inquiry.name || !inquiry.email || !inquiry.serviceType || !inquiry.message) {
     return "Bitte Name, E-Mail, Leistung und Beschreibung ausfuellen.";
   }
@@ -529,6 +625,21 @@ function wantsJson(req) {
 
 function escapeCsv(value) {
   return `"${String(value || "").replace(/"/g, "\"\"")}"`;
+}
+
+function getClientIdentifier(req) {
+  const cfIp = req.headers["cf-connecting-ip"];
+  const forwardedFor = req.headers["x-forwarded-for"];
+
+  if (typeof cfIp === "string" && cfIp) {
+    return cfIp;
+  }
+
+  if (typeof forwardedFor === "string" && forwardedFor) {
+    return forwardedFor.split(",")[0].trim();
+  }
+
+  return req.ip;
 }
 
 function collectUrls(currentPort) {

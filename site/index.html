@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; font-src 'self'; script-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; font-src 'self'; script-src 'self'; connect-src 'self' https: http://localhost:8080 http://127.0.0.1:8080; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="description" content="Pixel&Parts bietet PC- und Laptop-Reparaturen, Hardware- und Software-Upgrades, Updates, Datenrettung und persönliche Beratung mit sauberem Sicherheitsstandard.">
   <meta name="theme-color" content="#0a1324">
@@ -222,19 +222,20 @@
         <h2>Probleme direkt erfassen statt per losem Chat suchen</h2>
         <p>
           Ueber dieses Formular koennen Reparatur-, Upgrade- und Datenrettungsanfragen strukturiert
-          aufgenommen werden. Wenn der lokale Pixel&amp;Parts-Server aktiv ist, landet die Anfrage
-          direkt in der lokalen Datenbank.
+          aufgenommen werden. Die GitHub-Page kann direkt an dein oeffentlich erreichbares
+          Anfrage-Backend senden. Wenn das Backend kurz nicht verfuegbar ist, wird die Anfrage
+          im Browser zwischengespeichert und spaeter in die lokale SQLite-Datenbank uebertragen.
         </p>
       </div>
 
       <div class="request-grid">
         <article class="feature-card request-copy">
-          <div class="status-chip" id="backend-chip">Backend wird geprueft</div>
-          <h3>Lokale Anfragezentrale</h3>
-          <p>
-            Neue Anfragen werden in SQLite gespeichert und koennen anschliessend auf dem PC oder
-            auf dem Handy im gleichen WLAN ueber die Verwaltungsoberflaeche geoeffnet werden.
-          </p>
+            <div class="status-chip" id="backend-chip">Backend wird geprueft</div>
+            <h3>Direkt in deine lokale Anfragezentrale</h3>
+            <p>
+            Neue Anfragen werden direkt in SQLite gespeichert und koennen anschliessend auf dem PC
+            oder auf dem Handy auch ausserhalb deines WLANs ueber die geschuetzte Verwaltungsoberflaeche geoeffnet werden.
+            </p>
           <ul class="pill-list">
             <li>Reparaturen</li>
             <li>Upgrades</li>
@@ -242,13 +243,17 @@
             <li>Datenrettung</li>
             <li>Beratung</li>
           </ul>
+          <div class="cta-stack">
+            <a class="button button-secondary is-hidden" id="dashboard-link" href="#" rel="noreferrer">Dashboard von unterwegs oeffnen</a>
+            <p class="queue-note" id="queue-note">Noch keine offline zwischengespeicherten Anfragen auf diesem Geraet.</p>
+          </div>
           <p class="backend-note" id="backend-note">
-            Wenn nur die kostenlos gehostete GitHub-Pages-Version offen ist, bleibt das Formular
-            aus Sicherheitsgruenden deaktiviert und der Kontakt laeuft ueber E-Mail oder Telefon.
+            Das Formular sucht automatisch nach dem oeffentlichen Anfrage-Backend. Ist es erreichbar,
+            wird direkt in die lokale Datenbank gespeichert.
           </p>
         </article>
 
-        <form class="request-form" id="request-form" method="post" action="./api/inquiries">
+        <form class="request-form" id="request-form" method="post" action="./api/inquiries" novalidate>
           <div class="form-grid">
             <label class="input-group">
               <span>Name</span>
@@ -293,8 +298,13 @@
           </div>
 
           <input type="hidden" name="source" value="website">
-          <button class="button button-primary" id="request-submit" type="submit">Anfrage lokal speichern</button>
-          <p class="field-hint" id="request-hint">Die Anfrage wird nur gespeichert, wenn der lokale Pixel&amp;Parts-Server erreichbar ist.</p>
+          <label class="honeypot" aria-hidden="true" tabindex="-1">
+            <span>Bitte leer lassen</span>
+            <input type="text" name="website" autocomplete="off" tabindex="-1">
+          </label>
+          <button class="button button-primary" id="request-submit" type="submit">Anfrage senden</button>
+          <p class="field-hint" id="request-hint">Wenn das Backend online ist, wird direkt in SQLite gespeichert. Bei Verbindungsproblemen wird die Anfrage auf diesem Geraet gepuffert und spaeter nachgesendet.</p>
+          <p class="field-feedback" id="request-feedback" aria-live="polite"></p>
         </form>
       </div>
     </section>
@@ -303,7 +313,7 @@
       <div class="section-heading">
         <p class="eyebrow">Kontakt</p>
         <h2>Direkt erreichbar fuer Reparatur, Upgrade oder Datenrettung</h2>
-        <p>Die oeffentliche Seite ist fuer Kontakt aufgebaut, die lokale Version zusaetzlich fuer die strukturierte Anfrageverwaltung.</p>
+          <p>Die oeffentliche Seite nimmt direkte Anfragen an, die lokale SQLite-Datenbank bleibt auf deinem PC und das Dashboard ist ueber einen geschuetzten oeffentlichen Tunnel auch von unterwegs erreichbar.</p>
       </div>
 
       <div class="contact-panel">
@@ -317,7 +327,7 @@
           <ul class="contact-list">
             <li>E-Mail fuer allgemeine Anfragen und Terminabsprachen</li>
             <li>Telefon fuer schnelle Rueckrufe oder Notfaelle</li>
-            <li>Lokales Dashboard fuer Anfragen auf Handy und PC</li>
+              <li>Geschuetztes Dashboard fuer Anfragen auf Handy und PC von ueberall</li>
           </ul>
         </div>
 

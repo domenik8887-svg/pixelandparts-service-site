@@ -5,7 +5,8 @@
   "description": "Pixel&Parts Website mit lokaler Anfragenverwaltung auf SQLite-Basis.",
   "scripts": {
     "start": "node server.js",
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "public": "node tools/start-public-access.js"
   },
   "dependencies": {
     "express": "^5.1.0"
