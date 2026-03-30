@@ -103,6 +103,43 @@ ol {
   backdrop-filter: blur(12px);
 }
 
+.faith-strip {
+  border-bottom: 1px solid rgba(34, 60, 91, 0.08);
+  background: linear-gradient(90deg, rgba(183, 122, 62, 0.08), rgba(34, 60, 91, 0.06));
+}
+
+.faith-strip-inner {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.7rem 0;
+}
+
+.faith-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.84);
+  border: 1px solid rgba(34, 60, 91, 0.12);
+  color: var(--accent);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.faith-badge::before {
+  content: "+";
+  font-size: 1rem;
+  line-height: 1;
+  color: var(--accent-warm);
+}
+
+.faith-copy {
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+
 .nav-shell {
   display: flex;
   align-items: center;
@@ -698,6 +735,11 @@ html[dir="rtl"] .request-copy ul {
 }
 
 @media (max-width: 760px) {
+  .faith-strip-inner {
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
   .site-header {
     position: static;
   }

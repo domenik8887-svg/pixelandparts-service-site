@@ -1,4 +1,4 @@
-const CACHE_NAME = "pixelparts-modern-v5";
+const CACHE_NAME = "pixelparts-modern-v6";
 const CORE_ASSETS = [
   "./",
   "./index.html",

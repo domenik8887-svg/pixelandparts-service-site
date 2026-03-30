@@ -256,7 +256,53 @@ const translations = {
   }
 };
 
+const brandContent = {
+  de: {
+    brandSubtitle: "PC-Service mit christlichen Werten",
+    faithBadge: "Christlich geprägt",
+    faithText: "Ehrlichkeit, Verantwortung und Hilfe mit Respekt.",
+    footerText: "PC- und Laptop-Service in Köln-Mülheim, geprägt von Ehrlichkeit, Verantwortung und einem respektvollen Umgang mit Menschen und Daten."
+  },
+  en: {
+    brandSubtitle: "PC service shaped by Christian values",
+    faithBadge: "Christian values",
+    faithText: "Honesty, responsibility and respectful help.",
+    footerText: "PC and laptop service in Cologne-Mülheim shaped by honesty, responsibility and respectful care for people and data."
+  },
+  he: {
+    brandSubtitle: "שירות מחשבים עם ערכים נוצריים",
+    faithBadge: "ערכים נוצריים",
+    faithText: "יושר, אחריות ועזרה מתוך כבוד.",
+    footerText: "שירות למחשבי PC ולפטופים בקלן-מילהיים, מונחה ביושר, אחריות ויחס מכבד לאנשים ולנתונים."
+  },
+  ru: {
+    brandSubtitle: "ПК-сервис с христианскими ценностями",
+    faithBadge: "Христианские ценности",
+    faithText: "Честность, ответственность и уважительная помощь.",
+    footerText: "Сервис для ПК и ноутбуков в Кёльн-Мюльхайме, основанный на честности, ответственности и уважительном отношении к людям и данным."
+  },
+  zh: {
+    brandSubtitle: "以基督教价值观为基础的电脑服务",
+    faithBadge: "基督教价值观",
+    faithText: "诚实、责任与尊重式帮助。",
+    footerText: "位于科隆米尔海姆的 PC 与笔记本服务，以诚实、责任和对人与数据的尊重为基础。"
+  },
+  tr: {
+    brandSubtitle: "Hristiyan degerlerle bilgisayar servisi",
+    faithBadge: "Hristiyan degerler",
+    faithText: "Dogruluk, sorumluluk ve saygili destek.",
+    footerText: "Koeln-Muelheim'de PC ve dizustu bilgisayar servisi; durustluk, sorumluluk ve insanlara ve verilere saygili yaklasimla sunulur."
+  },
+  ar: {
+    brandSubtitle: "خدمة كمبيوتر بقيم مسيحية",
+    faithBadge: "قيم مسيحية",
+    faithText: "أمانة ومسؤولية ومساعدة باحترام.",
+    footerText: "خدمة لأجهزة الكمبيوتر واللابتوب في كولونيا-مولهايم، قائمة على الأمانة والمسؤولية والاحترام في التعامل مع الناس والبيانات."
+  }
+};
+
 const t = translations[currentLang] || translations.de;
+const branding = brandContent[currentLang] || brandContent.de;
 const pendingStorageKey = "pixelparts-pending-requests";
 
 function buildSiteUrl(relativePath) {
@@ -347,6 +393,63 @@ function closeLanguageSwitch(wrapper) {
   if (button) {
     button.setAttribute("aria-expanded", "false");
   }
+}
+
+function normalizeBotTrapFields() {
+  document.querySelectorAll("input[name='website']").forEach((input) => {
+    input.type = "hidden";
+    input.hidden = true;
+    input.tabIndex = -1;
+    input.setAttribute("aria-hidden", "true");
+    input.removeAttribute("autocomplete");
+
+    const wrapper = input.closest(".bot-trap, label, .field") || input.parentElement;
+    if (wrapper && wrapper !== input.form) {
+      wrapper.hidden = true;
+      wrapper.setAttribute("aria-hidden", "true");
+      wrapper.classList.add("bot-trap");
+    }
+  });
+}
+
+function applySiteBranding() {
+  document.querySelectorAll(".brand small").forEach((node) => {
+    node.textContent = branding.brandSubtitle;
+    node.lang = currentLang;
+    node.dir = rtlLanguages.has(currentLang) ? "rtl" : "ltr";
+  });
+
+  const footerLead = document.querySelector(".site-footer .footer-grid > div:first-child p:not(.footer-title)");
+  if (footerLead) {
+    footerLead.textContent = branding.footerText;
+    footerLead.lang = currentLang;
+    footerLead.dir = rtlLanguages.has(currentLang) ? "rtl" : "ltr";
+  }
+
+  const header = document.querySelector(".site-header");
+  if (header && !document.querySelector(".faith-strip")) {
+    const strip = document.createElement("div");
+    strip.className = "faith-strip";
+
+    const inner = document.createElement("div");
+    inner.className = "shell faith-strip-inner";
+
+    const badge = document.createElement("span");
+    badge.className = "faith-badge";
+    badge.textContent = branding.faithBadge;
+
+    const text = document.createElement("p");
+    text.className = "faith-copy";
+    text.textContent = branding.faithText;
+    text.lang = currentLang;
+    text.dir = rtlLanguages.has(currentLang) ? "rtl" : "ltr";
+
+    inner.append(badge, text);
+    strip.append(inner);
+    header.insertAdjacentElement("afterend", strip);
+  }
+
+  normalizeBotTrapFields();
 }
 
 function setupLanguageSwitch() {
@@ -463,6 +566,7 @@ function registerServiceWorker() {
 }
 
 function setupRequestForm() {
+  applySiteBranding();
   setupLanguageSwitch();
 
   const requestForm = document.querySelector("[data-request-form]");
