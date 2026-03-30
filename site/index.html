@@ -79,7 +79,7 @@
           <ul>
             <li>Erst Diagnose, dann Entscheidung über Reparatur oder Aufrüstung</li>
             <li>Neue Fälle landen direkt in einer lokalen SQLite-Verwaltung</li>
-            <li>Dashboard-Zugriff ist passwortgeschützt lokal und unterwegs möglich</li>
+            <li>Die interne Fallverwaltung ist passwortgeschützt und getrennt vom öffentlichen Auftritt</li>
             <li>Keine Tracker, keine Fremdskripte und Offline-Puffer bei Verbindungsproblemen</li>
           </ul>
         </div>
@@ -176,8 +176,8 @@
           <p>Anfragen landen nicht in losem Chat-Chaos, sondern in einer klaren lokalen Verwaltung mit Status und Notizen.</p>
         </article>
         <article class="matrix-card">
-          <h3>Von überall abrufbar</h3>
-          <p>Das Dashboard kann nicht nur lokal, sondern auch geschützt unterwegs auf dem Handy oder einem anderen Rechner geöffnet werden.</p>
+          <h3>Interne Fallverwaltung</h3>
+          <p>Anfragen bleiben intern organisiert, können geschützt bearbeitet werden und sind nicht auf der öffentlichen Website verlinkt.</p>
         </article>
         <article class="matrix-card">
           <h3>Datensparsame Website</h3>
@@ -259,7 +259,7 @@
           <h3>Direkt in die Anfragezentrale</h3>
           <p>
             Neue Anfragen werden ohne Umweg in der lokalen Verwaltung gespeichert. So sind sie
-            im Dashboard sofort sichtbar und können auch unterwegs weiterbearbeitet werden.
+            intern sofort sichtbar und können ohne Medienbruch weiterbearbeitet werden.
           </p>
           <ul class="pill-list">
             <li>Reparaturen</li>
@@ -269,7 +269,6 @@
             <li>Beratung</li>
           </ul>
           <div class="cta-stack">
-            <a class="button button-secondary is-hidden" id="dashboard-link" href="#" rel="noreferrer">Dashboard öffnen</a>
             <p class="queue-note" id="queue-note">Noch keine offline zwischengespeicherten Anfragen auf diesem Gerät.</p>
           </div>
           <p class="backend-note" id="backend-note">
@@ -349,20 +348,19 @@
           <p class="contact-kicker">Pixel&amp;Parts</p>
           <h3>Werkstattauftritt und Anfrageverwaltung aus einem Guss</h3>
           <p>
-            Die öffentliche Website nimmt Anfragen professionell auf, während das lokale Dashboard
+            Die öffentliche Website nimmt Anfragen professionell auf, während die interne Fallverwaltung
             alle Fälle sauber bündelt. Dadurch bleibt der Außenauftritt schlank und die operative
             Arbeit im Hintergrund gut organisiert.
           </p>
           <ul class="contact-list">
             <li>Rückmeldung über den gewünschten Kontaktweg</li>
-            <li>Dashboard-Zugriff lokal und unterwegs</li>
-            <li>Klare Statusführung für jede Anfrage</li>
+            <li>Interne Statusführung je Anfrage</li>
+            <li>Saubere Bearbeitung ohne Medienbruch</li>
           </ul>
         </div>
 
         <div class="contact-actions">
           <a class="button button-primary" href="#anfrage">Jetzt Anfrage stellen</a>
-          <a class="button button-secondary is-hidden" id="dashboard-link-contact" href="#" rel="noreferrer">Dashboard öffnen</a>
           <p class="contact-note">Die Anfragezentrale speichert neue Fälle direkt lokal in SQLite, sobald das Backend erreichbar ist.</p>
         </div>
       </div>

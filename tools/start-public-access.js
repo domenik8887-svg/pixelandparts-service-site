@@ -45,7 +45,6 @@ async function main() {
     siteUrl: publicSiteUrl,
     siteOrigin: publicSiteOrigin,
     apiBaseUrl: publicUrl,
-    dashboardUrl,
     status: "online",
     updatedAt
   });

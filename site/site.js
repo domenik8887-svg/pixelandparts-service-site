@@ -1,10 +1,6 @@
 const backendChip = document.getElementById("backend-chip");
 const backendNote = document.getElementById("backend-note");
 const queueNote = document.getElementById("queue-note");
-const dashboardLinks = [
-  document.getElementById("dashboard-link"),
-  document.getElementById("dashboard-link-contact")
-].filter(Boolean);
 const requestForm = document.getElementById("request-form");
 const requestSubmit = document.getElementById("request-submit");
 const requestHint = document.getElementById("request-hint");
@@ -14,7 +10,6 @@ const PENDING_STORAGE_KEY = "pixelparts-pending-requests";
 
 const state = {
   apiBaseUrl: "",
-  dashboardUrl: "",
   backendReady: false
 };
 
@@ -63,19 +58,6 @@ const setBackendState = ({ chip, note, hint, ready }) => {
   backendNote.textContent = note;
   requestHint.textContent = hint;
   requestSubmit.textContent = ready ? "Anfrage direkt senden" : "Anfrage offline sichern";
-};
-
-const updateDashboardLinks = () => {
-  for (const link of dashboardLinks) {
-    if (!state.dashboardUrl) {
-      link.classList.add("is-hidden");
-      link.removeAttribute("href");
-      continue;
-    }
-
-    link.href = state.dashboardUrl;
-    link.classList.remove("is-hidden");
-  }
 };
 
 const useReadyMode = () => {
@@ -218,8 +200,6 @@ const loadRuntime = async () => {
 
   if (await isLocalBackendOrigin()) {
     state.apiBaseUrl = window.location.origin;
-    state.dashboardUrl = `${window.location.origin}/login`;
-    updateDashboardLinks();
     useReadyMode();
     await flushPendingRequests();
     return;
@@ -227,8 +207,6 @@ const loadRuntime = async () => {
 
   const publicConfig = await loadPublicConfig();
   state.apiBaseUrl = normalizeOrigin(publicConfig.apiBaseUrl || "");
-  state.dashboardUrl = publicConfig.dashboardUrl || "";
-  updateDashboardLinks();
 
   if (await probeBackend(state.apiBaseUrl)) {
     useReadyMode();

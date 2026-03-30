@@ -46,9 +46,7 @@ app.get("/api/health", (_req, res) => {
   res.json({
     backend: true,
     storage: "sqlite",
-    dashboardPath: "/dashboard",
-    publicApiUrl: publicConfig.apiBaseUrl || "",
-    publicDashboardUrl: publicConfig.dashboardUrl || ""
+    publicApiUrl: publicConfig.apiBaseUrl || ""
   });
 });
 
@@ -348,7 +346,6 @@ function loadPublicSiteConfig() {
       siteUrl: runtimeConfig.publicSiteUrl,
       siteOrigin: runtimeConfig.publicSiteOrigin,
       apiBaseUrl: "",
-      dashboardUrl: "",
       status: "offline",
       updatedAt: ""
     };
@@ -361,7 +358,7 @@ function generateSecret(length) {
   return crypto.randomBytes(length).toString("base64url").slice(0, length);
 }
 
-function securityHeaders(_req, res, next) {
+function securityHeaders(req, res, next) {
   res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
   res.setHeader("X-Content-Type-Options", "nosniff");
   res.setHeader("X-Frame-Options", "DENY");
@@ -369,7 +366,22 @@ function securityHeaders(_req, res, next) {
   res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
   res.setHeader("Cross-Origin-Resource-Policy", "same-origin");
   res.setHeader("Content-Security-Policy", "default-src 'self'; img-src 'self' data:; style-src 'self'; font-src 'self'; script-src 'self'; connect-src 'self' https: http://localhost:8080 http://127.0.0.1:8080; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'");
+
+  if (isSensitivePath(req.path)) {
+    res.setHeader("X-Robots-Tag", "noindex, nofollow, noarchive");
+    res.setHeader("Cache-Control", "no-store, private, max-age=0");
+  }
+
   next();
+}
+
+function isSensitivePath(pathname = "") {
+  return (
+    pathname === "/login" ||
+    pathname.startsWith("/dashboard") ||
+    pathname.startsWith("/auth") ||
+    pathname.startsWith("/local-ui")
+  );
 }
 
 function applyPublicCors(req, res, next) {
