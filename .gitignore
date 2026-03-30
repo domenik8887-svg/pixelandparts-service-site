@@ -4,3 +4,5 @@ data/runtime-config.json
 npm-debug.log*
 server.log
 server.err
+public-access.log
+public-access.err
