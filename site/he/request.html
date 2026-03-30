@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'self' https: http://localhost:8080 http://127.0.0.1:8080; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests">
+  <meta name="description" content="טופס פנייה לתיקונים, שדרוגים, שחזור נתונים וייעוץ ב-Pixel &amp; Parts.">
+  <meta name="theme-color" content="#f5f1ea">
+  <title>Pixel &amp; Parts | פנייה</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../site.webmanifest">
+  <link rel="stylesheet" href="../modern.css">
+  <script src="../public.js" defer></script>
+</head>
+<body data-site-root=".." data-page-key="request" data-success-url="./success.html">
+  <a class="skip-link" href="#main-content">דלג לתוכן</a>
+  <header class="site-header"><div class="shell nav-shell"><a class="brand" href="index.html"><img src="../assets/pixel-parts-mark.svg" width="52" height="52" alt=""><span><strong>Pixel &amp; Parts</strong><small>שירות למחשבי PC, תיקונים ושחזור נתונים</small></span></a><div class="header-tools"><nav class="main-nav" aria-label="ניווט ראשי"><a href="index.html">בית</a><a href="services.html">שירותים</a><a href="process.html">תהליך</a><a href="faq.html">שאלות נפוצות</a><a class="is-active" href="request.html">פנייה</a><a href="contact.html">יצירת קשר</a></nav><div class="language-switch" data-language-switch aria-label="שפה"></div></div></div></header>
+  <main id="main-content" class="page-shell">
+
+    <section class="shell page-hero"><div><p class="eyebrow">טופס פנייה</p><h1>שלח פנייה לתיקון, שדרוג או נתונים.</h1><p class="lead">תאר בקצרה את המכשיר, הבעיה ודרך הקשר המועדפת כדי ש-Pixel &amp; Parts תוכל להעריך במהירות את הצעד הנכון.</p></div><article class="panel request-copy"><div class="status-chip" id="backend-chip">החיבור נבדק</div><h3>מה כדאי לציין</h3><ul class="detail-list"><li>לציין את סוג המכשיר</li><li>לתאר בקצרה את הבעיה או השינוי הרצוי</li><li>לבחור דרך קשר מועדפת</li><li>להזכיר סיכון לנתונים או השבתה מלאה</li></ul><p class="queue-note" id="queue-note">כרגע אין פניות שמורות במכשיר זה.</p><p class="contact-note" id="backend-note">הטופס בודק את החיבור אוטומטית ושולח פניות חדשות ברגע שהחיבור זמין.</p></article></section>
+    <section class="shell section"><form class="request-form" data-request-form method="post" action="../api/inquiries" novalidate><div class="form-grid"><label class="field"><span>שם</span><input type="text" name="name" autocomplete="name" required></label><label class="field"><span>דוא&quot;ל</span><input type="email" name="email" autocomplete="email" required></label><label class="field"><span>טלפון</span><input type="tel" name="phone" autocomplete="tel"></label><label class="field"><span>שירות</span><select name="serviceType" data-custom-select required><option value="">נא לבחור</option><option>תיקון PC</option><option>תיקון לפטופ</option><option>שדרוג חומרה</option><option>שדרוג / עדכון תוכנה</option><option>שחזור נתונים</option><option>ייעוץ</option></select></label><label class="field field-wide"><span>מכשיר</span><input type="text" name="deviceType" placeholder="למשל Office-PC, Gaming-PC, ThinkPad או iMac"></label><label class="field field-wide"><span>דרך קשר מועדפת</span><select name="preferredContact" data-custom-select><option>דוא&quot;ל</option><option>טלפון</option><option>WhatsApp</option></select></label><label class="field field-full"><span>תיאור הבעיה</span><textarea name="message" rows="6" placeholder="תאר את התקלה, את השדרוג הרצוי או אילו נתונים צריך לשחזר." required></textarea></label></div><input type="hidden" name="source" value="website"><label class="field" style="display:none"><span>להשאיר ריק</span><input type="text" name="website" autocomplete="off" tabindex="-1"></label><button class="button button-primary" id="request-submit" type="submit">שלח פנייה</button><p class="field-hint" id="request-hint">כאשר החיבור זמין, הפנייה נשלחת מיד. במקרה של תקלה קצרה היא נשמרת בבטחה במכשיר זה ונשלחת מאוחר יותר.</p><p class="field-feedback" id="request-feedback" aria-live="polite"></p></form></section>
+  </main>
+  <footer class="site-footer"><div class="shell footer-grid"><div><p class="footer-title">Pixel &amp; Parts</p><p>שירות למחשבי PC ולפטופים עם דגש על תיקון, שדרוג, שחזור נתונים וליווי טכני ברור.</p></div><div><p class="footer-title">עמודים</p><ul class="footer-list"><li><a href="services.html">שירותים</a></li><li><a href="process.html">תהליך</a></li><li><a href="faq.html">שאלות נפוצות</a></li><li><a href="request.html">פנייה</a></li><li><a href="contact.html">יצירת קשר</a></li><li><a href="../en/legal.html">פרטים משפטיים</a></li><li><a href="../en/privacy.html">פרטיות</a></li></ul></div><div><p class="footer-title">יצירת קשר ישירה</p><ul class="footer-list"><li><a href="mailto:koelbeldomenik@web.de">koelbeldomenik@web.de</a></li><li><a href="tel:+491771680815">0177 1680815</a></li><li><a href="https://wa.me/4915751713843" rel="noreferrer">WhatsApp</a></li><li><a href="../.well-known/security.txt">security.txt</a></li></ul></div></div></footer>
+</body>
+</html>

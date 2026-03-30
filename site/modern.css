@@ -41,6 +41,10 @@ body {
   line-height: 1.65;
 }
 
+html[dir="rtl"] body {
+  text-align: right;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -161,25 +165,70 @@ h3,
 }
 
 .language-switch {
+  position: relative;
+}
+
+.language-switch-button {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  padding: 0.3rem;
+  gap: 0.55rem;
+  min-height: 3rem;
+  padding: 0.45rem 0.8rem;
   border: 1px solid var(--line);
   border-radius: 999px;
   background: var(--panel);
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
 }
 
-.language-switch a {
-  padding: 0.45rem 0.7rem;
-  border-radius: 999px;
+.language-switch-current {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.language-switch-name {
   color: var(--muted);
   font-size: 0.9rem;
 }
 
-.language-switch a.is-active {
-  background: var(--accent);
-  color: #fff;
+.language-switch-icon {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.language-switch-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 0.45rem);
+  right: 0;
+  z-index: 8;
+  min-width: 220px;
+  padding: 0.45rem;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: var(--shadow);
+}
+
+.language-switch[data-open="true"] .language-switch-menu {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.language-switch-option {
+  display: block;
+  padding: 0.8rem 0.9rem;
+  border-radius: 12px;
+  color: var(--text);
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.language-switch-option.is-active,
+.language-switch-option:hover {
+  background: var(--accent-soft);
+  color: var(--accent);
 }
 
 .page-shell {
@@ -275,7 +324,9 @@ h3 {
 .button:hover,
 .button:focus-visible,
 .custom-select-button:hover,
-.custom-select-button:focus-visible {
+.custom-select-button:focus-visible,
+.language-switch-button:hover,
+.language-switch-button:focus-visible {
   transform: translateY(-1px);
 }
 
@@ -441,7 +492,8 @@ h3 {
 .custom-select-button:focus-visible,
 .button:focus-visible,
 .main-nav a:focus-visible,
-.language-switch a:focus-visible,
+.language-switch-button:focus-visible,
+.language-switch-option:focus-visible,
 .footer-list a:focus-visible,
 .brand:focus-visible {
   outline: none;
@@ -537,6 +589,22 @@ h3 {
   cursor: pointer;
 }
 
+html[dir="rtl"] .custom-select-button,
+html[dir="rtl"] .custom-select-option,
+html[dir="rtl"] .language-switch-button,
+html[dir="rtl"] .language-switch-option,
+html[dir="rtl"] .field input,
+html[dir="rtl"] .field textarea,
+html[dir="rtl"] .field span,
+html[dir="rtl"] .lead,
+html[dir="rtl"] .section-heading,
+html[dir="rtl"] .section-heading p,
+html[dir="rtl"] .detail-list,
+html[dir="rtl"] .footer-list,
+html[dir="rtl"] .request-copy ul {
+  text-align: right;
+}
+
 .custom-select-option[data-selected="true"],
 .custom-select-option:hover {
   background: var(--accent-soft);
@@ -602,8 +670,19 @@ h3 {
   }
 
   .main-nav a,
-  .language-switch a {
+  .language-switch-button {
     text-align: center;
+  }
+
+  .language-switch-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .language-switch-menu {
+    left: 0;
+    right: 0;
+    min-width: 0;
   }
 
   .page-shell {

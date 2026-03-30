@@ -1,4 +1,4 @@
-const CACHE_NAME = "pixelparts-modern-v3";
+const CACHE_NAME = "pixelparts-modern-v4";
 const CORE_ASSETS = [
   "./",
   "./index.html",
@@ -22,7 +22,42 @@ const CORE_ASSETS = [
   "./en/contact.html",
   "./en/success.html",
   "./en/legal.html",
-  "./en/privacy.html"
+  "./en/privacy.html",
+  "./he/index.html",
+  "./he/services.html",
+  "./he/process.html",
+  "./he/faq.html",
+  "./he/request.html",
+  "./he/contact.html",
+  "./he/success.html",
+  "./ru/index.html",
+  "./ru/services.html",
+  "./ru/process.html",
+  "./ru/faq.html",
+  "./ru/request.html",
+  "./ru/contact.html",
+  "./ru/success.html",
+  "./zh/index.html",
+  "./zh/services.html",
+  "./zh/process.html",
+  "./zh/faq.html",
+  "./zh/request.html",
+  "./zh/contact.html",
+  "./zh/success.html",
+  "./tr/index.html",
+  "./tr/services.html",
+  "./tr/process.html",
+  "./tr/faq.html",
+  "./tr/request.html",
+  "./tr/contact.html",
+  "./tr/success.html",
+  "./ar/index.html",
+  "./ar/services.html",
+  "./ar/process.html",
+  "./ar/faq.html",
+  "./ar/request.html",
+  "./ar/contact.html",
+  "./ar/success.html"
 ];
 
 self.addEventListener("install", (event) => {
