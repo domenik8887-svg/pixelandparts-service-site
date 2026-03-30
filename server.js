@@ -180,7 +180,7 @@ app.get("/dashboard/api/export.csv", requireAuth, (_req, res) => {
       escapeCsv(inquiry.status),
       escapeCsv(inquiry.name),
       escapeCsv(inquiry.email),
-      escapeCsv(inquiry.phone),
+      escapeCsvExcelText(inquiry.phone),
       escapeCsv(inquiry.serviceType),
       escapeCsv(inquiry.deviceType),
       escapeCsv(inquiry.preferredContact),
@@ -192,7 +192,7 @@ app.get("/dashboard/api/export.csv", requireAuth, (_req, res) => {
 
   res.setHeader("Content-Type", "text/csv; charset=utf-8");
   res.setHeader("Content-Disposition", "attachment; filename=\"pixelandparts-anfragen.csv\"");
-  res.send(lines.join("\n"));
+  res.send(`\uFEFF${lines.join("\n")}`);
 });
 
 app.post("/api/inquiries", (req, res) => {
@@ -637,6 +637,11 @@ function wantsJson(req) {
 
 function escapeCsv(value) {
   return `"${String(value || "").replace(/"/g, "\"\"")}"`;
+}
+
+function escapeCsvExcelText(value) {
+  const text = String(value || "").replace(/"/g, "\"\"");
+  return `"=""${text}"""`;
 }
 
 function getClientIdentifier(req) {
