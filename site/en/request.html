@@ -29,7 +29,7 @@
           <label class="field field-full"><span>Issue description</span><textarea name="message" rows="6" placeholder="Describe the fault, the upgrade you want, or what data should be recovered." required></textarea></label>
         </div>
         <input type="hidden" name="source" value="website">
-        <label class="field" style="display:none"><span>Leave this empty</span><input type="text" name="website" autocomplete="off" tabindex="-1"></label>
+        <div class="bot-trap" aria-hidden="true"><input type="text" name="website" autocomplete="off" tabindex="-1"></div>
         <button class="button button-primary" id="request-submit" type="submit">Send request</button>
         <p class="field-hint" id="request-hint">If the connection is available, the request is sent directly. If there is a short outage, it can be stored safely on this device and delivered automatically later.</p>
         <p class="field-feedback" id="request-feedback" aria-live="polite"></p>

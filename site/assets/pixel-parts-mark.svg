@@ -1,16 +1,23 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="title desc">
-  <title id="title">Pixel und Parts Markenzeichen</title>
-  <desc id="desc">Ein Schildsymbol mit Pixel- und Hardware-Elementen.</desc>
+  <title id="title">Pixel &amp; Parts Zeichen</title>
+  <desc id="desc">Ein rundes Monogramm mit Pixel-Elementen und Leiterbahn-Anmutung fuer Pixel &amp; Parts.</desc>
   <defs>
-    <linearGradient id="shieldFill" x1="0%" x2="100%" y1="0%" y2="100%">
-      <stop offset="0%" stop-color="#122645"/>
-      <stop offset="100%" stop-color="#0a1424"/>
+    <linearGradient id="panelFill" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fffdfa"/>
+      <stop offset="100%" stop-color="#f2ece2"/>
+    </linearGradient>
+    <linearGradient id="traceFill" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2d6a4f"/>
+      <stop offset="100%" stop-color="#3f8a79"/>
     </linearGradient>
   </defs>
-  <rect width="96" height="96" rx="26" fill="#07101d"/>
-  <path d="M48 10l29 10v26c0 20.4-12.6 35.1-29 40-16.4-4.9-29-19.6-29-40V20l29-10z" fill="url(#shieldFill)" stroke="#34d2d1" stroke-width="3"/>
-  <path d="M48 24l13 5v12c0 8.9-5.3 16.4-13 19.6-7.7-3.2-13-10.7-13-19.6V29l13-5z" fill="#34d2d1"/>
-  <rect x="22" y="57" width="13" height="13" rx="3" fill="#ffbc49"/>
-  <rect x="61" y="57" width="13" height="13" rx="3" fill="#ffbc49"/>
-  <path d="M27 49h42" stroke="#ff8f3c" stroke-width="5" stroke-linecap="round"/>
+  <rect x="5" y="5" width="86" height="86" rx="28" fill="url(#panelFill)" stroke="#d9d0c2" stroke-width="2"/>
+  <circle cx="48" cy="48" r="28" fill="#ffffff" stroke="#223c5b" stroke-width="5"/>
+  <path d="M36 69V27h16c10.2 0 17 6 17 15.1 0 9.7-6.8 15.8-17 15.8H43V69" fill="none" stroke="#223c5b" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M44 49h15.5" fill="none" stroke="url(#traceFill)" stroke-width="4.2" stroke-linecap="round"/>
+  <circle cx="64" cy="49" r="5" fill="#2d6a4f"/>
+  <rect x="21" y="21" width="10" height="10" rx="2.5" fill="#b77a3e"/>
+  <rect x="21" y="35" width="10" height="10" rx="2.5" fill="#e4d8c5"/>
+  <path d="M60.5 64H71" fill="none" stroke="#b77a3e" stroke-width="4" stroke-linecap="round"/>
+  <rect x="72" y="60" width="8" height="8" rx="2" fill="#b77a3e"/>
 </svg>
