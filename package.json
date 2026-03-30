@@ -9,6 +9,7 @@
     "public": "node tools/start-public-access.js"
   },
   "dependencies": {
+    "exceljs": "^4.4.0",
     "express": "^5.1.0"
   }
 }

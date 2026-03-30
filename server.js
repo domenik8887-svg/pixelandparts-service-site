@@ -4,6 +4,7 @@ const fs = require("node:fs");
 const os = require("node:os");
 const path = require("node:path");
 const { DatabaseSync } = require("node:sqlite");
+const ExcelJS = require("exceljs");
 
 const rootDir = __dirname;
 const siteDir = path.join(rootDir, "site");
@@ -156,43 +157,39 @@ app.patch("/dashboard/api/inquiries/:id", requireAuth, (req, res) => {
 
 app.get("/dashboard/api/export.csv", requireAuth, (_req, res) => {
   const inquiries = listInquiries();
-  const lines = [
-    [
-      "ID",
-      "Erstellt",
-      "Status",
-      "Name",
-      "E-Mail",
-      "Telefon",
-      "Leistung",
-      "Gerät",
-      "Kontaktweg",
-      "Quelle",
-      "Nachricht",
-      "Notizen"
-    ].join(";")
-  ];
+  const lines = [getInquiryExportHeaders().join(";")];
 
   for (const inquiry of inquiries) {
+    const row = getInquiryExportRow(inquiry);
     lines.push([
-      inquiry.id,
-      escapeCsv(inquiry.createdAt),
-      escapeCsv(inquiry.status),
-      escapeCsv(inquiry.name),
-      escapeCsv(inquiry.email),
-      escapeCsvExcelText(inquiry.phone),
-      escapeCsv(inquiry.serviceType),
-      escapeCsv(inquiry.deviceType),
-      escapeCsv(inquiry.preferredContact),
-      escapeCsv(inquiry.source),
-      escapeCsv(inquiry.message),
-      escapeCsv(inquiry.notes)
+      row.id,
+      escapeCsv(row.createdAt),
+      escapeCsv(row.status),
+      escapeCsv(row.name),
+      escapeCsv(row.email),
+      escapeCsvExcelText(row.phone),
+      escapeCsv(row.serviceType),
+      escapeCsv(row.deviceType),
+      escapeCsv(row.preferredContact),
+      escapeCsv(row.source),
+      escapeCsv(row.message),
+      escapeCsv(row.notes)
     ].join(";"));
   }
 
   res.setHeader("Content-Type", "text/csv; charset=utf-8");
   res.setHeader("Content-Disposition", "attachment; filename=\"pixelandparts-anfragen.csv\"");
   res.send(`\uFEFF${lines.join("\n")}`);
+});
+
+app.get("/dashboard/api/export.xlsx", requireAuth, async (_req, res) => {
+  const workbook = createInquiryWorkbook(listInquiries());
+
+  res.setHeader("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+  res.setHeader("Content-Disposition", "attachment; filename=\"pixelandparts-anfragen.xlsx\"");
+
+  await workbook.xlsx.write(res);
+  res.end();
 });
 
 app.post("/api/inquiries", (req, res) => {
@@ -642,6 +639,99 @@ function escapeCsv(value) {
 function escapeCsvExcelText(value) {
   const text = String(value || "").replace(/"/g, "\"\"");
   return `"=""${text}"""`;
+}
+
+function getInquiryExportHeaders() {
+  return [
+    "ID",
+    "Erstellt",
+    "Status",
+    "Name",
+    "E-Mail",
+    "Telefon",
+    "Leistung",
+    "Gerät",
+    "Kontaktweg",
+    "Quelle",
+    "Nachricht",
+    "Notizen"
+  ];
+}
+
+function getInquiryExportRow(inquiry) {
+  return {
+    id: inquiry.id,
+    createdAt: inquiry.createdAt,
+    status: inquiry.status,
+    name: inquiry.name,
+    email: inquiry.email,
+    phone: inquiry.phone,
+    serviceType: inquiry.serviceType,
+    deviceType: inquiry.deviceType,
+    preferredContact: inquiry.preferredContact,
+    source: inquiry.source,
+    message: inquiry.message,
+    notes: inquiry.notes
+  };
+}
+
+function createInquiryWorkbook(inquiries) {
+  const workbook = new ExcelJS.Workbook();
+  workbook.creator = "Pixel & Parts";
+  workbook.created = new Date();
+
+  const sheet = workbook.addWorksheet("Anfragen", {
+    views: [{ state: "frozen", ySplit: 1 }]
+  });
+
+  sheet.columns = [
+    { header: "ID", key: "id", width: 10 },
+    { header: "Erstellt", key: "createdAt", width: 26 },
+    { header: "Status", key: "status", width: 18 },
+    { header: "Name", key: "name", width: 24 },
+    { header: "E-Mail", key: "email", width: 32 },
+    { header: "Telefon", key: "phone", width: 18, style: { numFmt: "@" } },
+    { header: "Leistung", key: "serviceType", width: 22 },
+    { header: "Gerät", key: "deviceType", width: 24 },
+    { header: "Kontaktweg", key: "preferredContact", width: 18 },
+    { header: "Quelle", key: "source", width: 14 },
+    { header: "Nachricht", key: "message", width: 44 },
+    { header: "Notizen", key: "notes", width: 36 }
+  ];
+
+  sheet.getRow(1).font = { bold: true };
+  sheet.getRow(1).alignment = { vertical: "middle" };
+  sheet.getRow(1).fill = {
+    type: "pattern",
+    pattern: "solid",
+    fgColor: { argb: "FFEFF3F8" }
+  };
+  sheet.autoFilter = {
+    from: "A1",
+    to: "L1"
+  };
+
+  for (const inquiry of inquiries) {
+    const row = getInquiryExportRow(inquiry);
+    sheet.addRow({
+      ...row,
+      phone: String(row.phone || "")
+    });
+  }
+
+  sheet.getColumn("phone").eachCell((cell) => {
+    cell.numFmt = "@";
+    cell.alignment = { horizontal: "left" };
+    if (cell.row > 1) {
+      cell.value = String(cell.value || "");
+    }
+  });
+
+  ["createdAt", "message", "notes"].forEach((key) => {
+    sheet.getColumn(key).alignment = { vertical: "top", wrapText: true };
+  });
+
+  return workbook;
 }
 
 function getClientIdentifier(req) {
