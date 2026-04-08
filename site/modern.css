@@ -152,6 +152,12 @@ ol {
   display: inline-flex;
   align-items: center;
   gap: 0.9rem;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.brand span {
+  min-width: 0;
 }
 
 .brand img {
@@ -180,6 +186,7 @@ h3,
   display: block;
   color: var(--muted);
   font-size: 0.88rem;
+  overflow-wrap: anywhere;
 }
 
 .header-tools {
@@ -348,10 +355,14 @@ h3 {
   align-items: center;
   justify-content: center;
   min-height: 3.1rem;
+  max-width: 100%;
   padding: 0.85rem 1.25rem;
   border-radius: 999px;
   border: 1px solid transparent;
   font-weight: 700;
+  text-align: center;
+  white-space: normal;
+  overflow-wrap: anywhere;
   cursor: pointer;
 }
 
@@ -511,6 +522,16 @@ h3 {
 .legal-section {
   padding: 1.25rem;
   border-radius: var(--radius-lg);
+}
+
+.contact-method {
+  display: grid;
+  align-content: start;
+  gap: 0.9rem;
+}
+
+.contact-method p:last-child {
+  margin-top: auto;
 }
 
 .trust-grid {
@@ -811,7 +832,7 @@ html[dir="rtl"] .feature-list li::before {
   }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 880px) {
   .faith-strip-inner {
     flex-wrap: wrap;
     align-items: flex-start;
@@ -825,22 +846,23 @@ html[dir="rtl"] .feature-list li::before {
     display: grid;
   }
 
-  .header-tools,
-  .cta-row {
-    flex-wrap: wrap;
-  }
-
   .header-tools {
     display: grid;
+    gap: 0.75rem;
   }
 
   .main-nav {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
   }
 
   .main-nav a,
   .language-switch-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3rem;
     text-align: center;
   }
 
@@ -857,6 +879,37 @@ html[dir="rtl"] .feature-list li::before {
 
   .page-shell {
     padding-top: 2rem;
+  }
+
+  .page-hero,
+  .panel,
+  .card,
+  .contact-method,
+  .legal-section,
+  .request-form {
+    padding: 1rem;
+  }
+
+  h1,
+  h2 {
+    max-width: 100%;
+  }
+
+  h1 {
+    font-size: clamp(1.95rem, 9vw, 4.6rem);
+  }
+
+  h2 {
+    font-size: clamp(1.55rem, 7vw, 3rem);
+  }
+
+  .cta-row {
+    display: grid;
+  }
+
+  .cta-row .button,
+  .contact-method .button {
+    width: 100%;
   }
 
   .form-grid {

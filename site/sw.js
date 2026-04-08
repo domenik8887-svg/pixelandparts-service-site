@@ -1,4 +1,4 @@
-const CACHE_NAME = "pixelparts-modern-v6";
+const CACHE_NAME = "pixelparts-modern-v8";
 const CORE_ASSETS = [
   "./",
   "./index.html",
@@ -12,8 +12,12 @@ const CORE_ASSETS = [
   "./anfrage-erfolgreich.html",
   "./modern.css",
   "./public.js",
+  "./public-config.json",
+  "./site.webmanifest",
   "./favicon.svg",
   "./assets/pixel-parts-mark.svg",
+  "./assets/photos/pc-assembly-closeup.jpg",
+  "./assets/photos/pc-assembly-overview.jpg",
   "./en/index.html",
   "./en/services.html",
   "./en/process.html",
@@ -75,26 +79,38 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
-  const url = new URL(event.request.url);
+  const { request } = event;
+  if (request.method !== "GET") {
+    return;
+  }
 
+  const url = new URL(request.url);
   if (url.origin !== self.location.origin) {
     return;
   }
 
-  if (url.pathname.endsWith("/public-config.json")) {
-    event.respondWith(fetch(event.request).catch(() => caches.match(event.request)));
-    return;
-  }
+  const cacheableDestinations = new Set(["document", "style", "script", "image", "font", "manifest"]);
 
-  if (event.request.mode === "navigate") {
-    event.respondWith(
-      fetch(event.request).catch(async () => {
-        const cached = await caches.match(event.request);
-        return cached || caches.match("./index.html");
-      })
-    );
-    return;
-  }
+  event.respondWith((async () => {
+    const cache = await caches.open(CACHE_NAME);
 
-  event.respondWith(caches.match(event.request).then((cached) => cached || fetch(event.request)));
+    try {
+      const fresh = await fetch(request);
+      if (fresh.ok && (request.mode === "navigate" || cacheableDestinations.has(request.destination) || url.pathname.endsWith("/public-config.json"))) {
+        cache.put(request, fresh.clone());
+      }
+      return fresh;
+    } catch (error) {
+      const cached = await cache.match(request);
+      if (cached) {
+        return cached;
+      }
+
+      if (request.mode === "navigate") {
+        return (await cache.match("./index.html")) || Response.error();
+      }
+
+      throw error;
+    }
+  })());
 });

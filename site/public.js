@@ -562,7 +562,9 @@ function registerServiceWorker() {
     return;
   }
 
-  navigator.serviceWorker.register(buildSiteUrl("sw.js")).catch(() => {});
+  navigator.serviceWorker.register(buildSiteUrl("sw.js")).then((registration) => {
+    registration.update().catch(() => {});
+  }).catch(() => {});
 }
 
 function setupRequestForm() {
