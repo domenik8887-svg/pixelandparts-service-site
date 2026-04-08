@@ -517,6 +517,8 @@ h3 {
 }
 
 .request-form {
+  display: grid;
+  gap: 1rem;
   padding: 1.3rem;
   border-radius: var(--radius-xl);
 }
@@ -596,6 +598,10 @@ h3 {
   margin-top: 0.8rem;
   color: var(--muted);
   font-size: 0.95rem;
+}
+
+.request-form > .button {
+  margin-top: 0;
 }
 
 .field-feedback[data-state="success"] {
