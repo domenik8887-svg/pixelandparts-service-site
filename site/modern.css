@@ -380,6 +380,65 @@ h3 {
   gap: 1rem;
 }
 
+.media-card {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--panel);
+  box-shadow: var(--shadow);
+}
+
+.media-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-media {
+  aspect-ratio: 4 / 3;
+}
+
+.feature-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.95fr);
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.media-card-wide {
+  aspect-ratio: 16 / 10;
+}
+
+.feature-panel {
+  display: grid;
+  align-content: center;
+  gap: 0.9rem;
+}
+
+.feature-list {
+  list-style: none;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.feature-list li {
+  position: relative;
+  padding-left: 1.2rem;
+  color: var(--muted);
+}
+
+.feature-list li::before {
+  content: "";
+  position: absolute;
+  top: 0.78rem;
+  left: 0;
+  width: 0.48rem;
+  height: 0.48rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-warm));
+  transform: translateY(-50%);
+}
+
 .panel {
   padding: 1.15rem;
   border-radius: var(--radius-lg);
@@ -694,9 +753,20 @@ html[dir="rtl"] .lead,
 html[dir="rtl"] .section-heading,
 html[dir="rtl"] .section-heading p,
 html[dir="rtl"] .detail-list,
+html[dir="rtl"] .feature-list,
 html[dir="rtl"] .footer-list,
 html[dir="rtl"] .request-copy ul {
   text-align: right;
+}
+
+html[dir="rtl"] .feature-list li {
+  padding-right: 1.2rem;
+  padding-left: 0;
+}
+
+html[dir="rtl"] .feature-list li::before {
+  right: 0;
+  left: auto;
 }
 
 .custom-select-option[data-selected="true"],
@@ -731,6 +801,7 @@ html[dir="rtl"] .request-copy ul {
 @media (max-width: 960px) {
   .page-hero,
   .request-layout,
+  .feature-split,
   .grid-3,
   .grid-2,
   .timeline,
